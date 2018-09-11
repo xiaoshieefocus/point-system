@@ -1,0 +1,9 @@
+{
+    "db": {
+        "host": "114.55.138.126",
+        "port": 5432,
+        "user": "b2buser",
+        "password": "b2buser",
+        "database": "point-system"
+    }
+}
