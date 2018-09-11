@@ -1,6 +1,7 @@
 var db = require('../lib/db'),
     logger = require('../lib/logger').logger,
     moment = require('moment'),
+    config = require('../configs/global/config'),
     points = {};
 
 points.create = function (tbl, data, callback) {
@@ -201,8 +202,7 @@ points.getCompany = function (companyId, callback) {
     var params = [],
         q = `SELECT SUM(change_points) FROM point_logs`,
         whereStr = ' WHERE ';
-        date = addDate(new Date(), -30);
-
+        date = moment().subtract(config.pointsActive, 'days').format("YYYY-MM-DD");
     if (companyId) {
         params.push(companyId);
         whereStr += ' company_id = $1 AND created >= $2 AND change_points > $3';
@@ -214,11 +214,5 @@ points.getCompany = function (companyId, callback) {
     }
     db.getObject(q, [companyId, date, 0], callback);
 };
-function addDate(date,days){ 
-    var d = new Date(date); 
-    d.setDate(d.getDate() + days); 
-    var m = d.getMonth() + 1; 
-    return d.getFullYear() + '-' + m + '-' + d.getDate(); 
-} 
 
 module.exports = points;
