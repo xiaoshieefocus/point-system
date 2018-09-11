@@ -5,5 +5,27 @@
         "user": "b2buser",
         "password": "b2buser",
         "database": "point-system"
-    }
+    },
+    "discountLevel": [
+    	{"points": 10000, "discount": 0.98},
+    	{"points": 50000, "discount": 0.95},
+    	{"points": 100000, "discount": 0.9},
+    	{"points": 150000, "discount": 0.85}
+    ],
+    "actionPoints": {
+    	"bom": [
+    		{"number": 1, "points": 2},
+    		{"number": 10, "points": 5},
+    		{"number": 50, "points": 10},
+    		{"number": 100, "points": 15},
+    		{"number": 200, "points": 20}
+    	],
+    	"purchase": 1,
+    	"invitation": 200
+    },
+    "bomPointsLimit": 10,
+    "invitationPointsLimit": 500,
+    "points2coupon": [
+    	{"points": 400, "coupon": [100, 50]}
+    ]
 }
