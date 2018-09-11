@@ -27,5 +27,7 @@
     "invitationPointsLimit": 500,
     "points2coupon": [
     	{"points": 400, "coupon": [100, 50]}
-    ]
+    ],
+    "pointsActive": 30,
+    "pointsExpire": 90
 }
