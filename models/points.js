@@ -1,19 +1,21 @@
 var db = require('../lib/db'),
     logger = require('../lib/logger').logger,
+    moment = require('moment'),
     points = {};
 
 points.create = function (tbl, data, callback) {
-  var param_names = [],
-      param_chars = [],
-      param_values = [];
+    var param_names = [],
+        param_chars = [],
+        param_values = [];
 
-  for (var k in data) {
+    for (var k in data) {
         param_names.push(k);
         param_values.push(data[k]);
         param_chars.push('$' + param_values.length);
-  }
-  var q = "INSERT INTO " + tbl + " (" + param_names.join(", ") + ") VALUES (" + param_chars.join(", ") + ") RETURNING *";
-  db.executeQuery(q, param_values, callback);
+    }
+    var q = "INSERT INTO " + tbl + " (" + param_names.join(", ") + ") VALUES (" + param_chars.join(", ") + ") RETURNING *";
+    console.log(q, param_values);
+    db.executeQuery(q, param_values, callback);
 };
 
 points.update = function (data, callback) {
@@ -103,6 +105,54 @@ points.list = function (condition, pageIndex, pagesize, callback) {
             }
         }
     });
+};
+
+points.getPointsForUserId = function (userId, callback) {
+    var q = `SELECT SUM(change_points) AS points FROM point_logs`,
+        params = [],
+        year = parseInt(moment().format("YYYY")),
+        month = parseInt(moment().format('M')),
+        startDate,
+        endDate,
+        whereStr = ' WHERE ';
+
+    if (month >= 1 && month <= 3) {
+        startDate = year + '-01-01';
+        endDate = year + '-04-01';
+    }
+    if (month >= 4 && month <= 6) {
+        startDate = year + '-04-01';
+        endDate = year + '-07-01';
+    }
+    if (month >= 7 && month <= 9) {
+        startDate = year + '-07-01';
+        endDate = year + '-10-01';
+    }
+    if (month >= 10 && month <= 12) {
+        startDate = year + '-10-01';
+        endDate = (year+1) + '-01-01';
+    }
+    if (!userId) {
+        return callback(null, 0);
+    } else {
+        params.push(userId);
+        whereStr += ' user_id = $' + params.length;
+
+        if (startDate) {
+            params.push(startDate);
+            whereStr += ' AND created >= $' + params.length;
+        }
+
+        if (endDate) {
+            params.push(endDate);
+            whereStr += ' AND created < $' + params.length;
+        }
+        if (whereStr != " WHERE ") {
+            q += whereStr;
+        }
+        db.getObject(q, params, callback);
+    }
+
 };
 
 module.exports = points;
