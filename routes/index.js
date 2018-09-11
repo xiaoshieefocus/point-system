@@ -5,6 +5,7 @@ var express = require('express'),
 	pointsHelper = require('../lib/helpers/points');
 
 /* GET home page. */
+
 router.get('/', function(req, res, next) {
   points.get(1, function (err, data) {
   	console.log(data);

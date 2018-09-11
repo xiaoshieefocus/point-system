@@ -130,7 +130,7 @@ points.getPointsForUserId = function (userId, callback) {
     }
     if (month >= 10 && month <= 12) {
         startDate = year + '-10-01';
-        endDate = (year+1) + '-01-01';
+        endDate = (year + 1) + '-01-01';
     }
     if (!userId) {
         return callback(null, 0);
@@ -154,5 +154,47 @@ points.getPointsForUserId = function (userId, callback) {
     }
 
 };
+
+points.getPointsTimes = function (condition, callback) {
+    var q = `SELECT count(change_points) AS times FROM point_logs`,
+        params = [],
+        sp = '',
+        whereStr = ' WHERE ';
+
+    if (condition.user_id) {
+        params.push(condition.user_id);
+        whereStr += sp + ' user_id = $' + params.length;
+        sp = ' AND ';
+    }
+
+    if (condition.company_id) {
+        params.push(condition.company_id);
+        whereStr += sp + ' company_id = $' + params.length;
+        sp = ' AND ';
+    }
+
+    if (condition.startDate) {
+        params.push(condition.startDate);
+        whereStr += sp + ' created >= $' + params.length;
+        sp = ' AND ';
+    }
+
+    if (condition.endDate) {
+        params.push(condition.endDate);
+        whereStr += sp + ' created < $' + params.length;
+        sp = ' AND ';
+    }
+
+    if (condition.actions) {
+        params.push(condition.actions);
+        whereStr += sp + ' actions = $' + params.length;
+        sp = ' AND ';
+    }
+    if (whereStr != " WHERE ") {
+        q += whereStr;
+    }
+    db.getObject(q, params, callback);
+};
+
 
 module.exports = points;
