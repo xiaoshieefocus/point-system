@@ -1,8 +1,8 @@
 var db = require('../lib/db'),
     logger = require('../lib/logger').logger,
-    points = {};
+    companies = {};
 
-points.create = function (tbl, data, callback) {
+companies.create = function (tbl, data, callback) {
   var param_names = [],
       param_chars = [],
       param_values = [];
@@ -16,19 +16,19 @@ points.create = function (tbl, data, callback) {
   db.executeQuery(q, param_values, callback);
 };
 
-points.update = function (data, callback) {
-    db.updateFields('point_log', 'id', data.id, data, callback);
+companies.update = function (data, callback) {
+    db.updateFields('companies', 'id', data.id, data, callback);
 };
-points.remove = function (id, callback) {
-    var q = `DELETE FROM point_log WHERE id = $1`;
+companies.remove = function (id, callback) {
+    var q = `DELETE FROM companies WHERE id = $1`;
 
     db.executeQuery(q, [id], callback);
 };
 
-points.removeMultiple = (ids, callback) => {
+companies.removeMultiple = (ids, callback) => {
     var params = [],
         paramIndex = [],
-        q = "DELETE FROM point_log WHERE";
+        q = "DELETE FROM companies WHERE";
     if (ids && ids.length) {
         ids.forEach(function (item, i) {
             params.push(item);
@@ -42,14 +42,14 @@ points.removeMultiple = (ids, callback) => {
     }
 };
 
-points.get = function (id, callback) {
-    var q = `SELECT * FROM point_log WHERE id = $1`;
+companies.get = function (id, callback) {
+    var q = `SELECT * FROM companies WHERE id = $1`;
     db.getObject(q, [id], callback);
 };
-points.list = function (condition, pageIndex, pagesize, callback) {
+companies.list = function (condition, pageIndex, pagesize, callback) {
     var params = [],
-        q_count = `SELECT count(*) count FROM point_log`,
-        q = `SELECT * FROM point_log`,
+        q_count = `SELECT count(*) count FROM companies`,
+        q = `SELECT * FROM companies`,
         whereStr = " WHERE ",
         sp = '',
         result = {
@@ -105,4 +105,4 @@ points.list = function (condition, pageIndex, pagesize, callback) {
     });
 };
 
-module.exports = points;
+module.exports = companies;
