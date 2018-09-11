@@ -17,10 +17,10 @@ points.create = function (tbl, data, callback) {
 };
 
 points.update = function (data, callback) {
-    db.updateFields('point_logs', 'id', data.id, data, callback);
+    db.updateFields('point_log', 'id', data.id, data, callback);
 };
 points.remove = function (id, callback) {
-    var q = `DELETE FROM point_logs WHERE id = $1`;
+    var q = `DELETE FROM point_log WHERE id = $1`;
 
     db.executeQuery(q, [id], callback);
 };
@@ -28,7 +28,7 @@ points.remove = function (id, callback) {
 points.removeMultiple = (ids, callback) => {
     var params = [],
         paramIndex = [],
-        q = "DELETE FROM point_logs WHERE";
+        q = "DELETE FROM point_log WHERE";
     if (ids && ids.length) {
         ids.forEach(function (item, i) {
             params.push(item);
@@ -43,13 +43,13 @@ points.removeMultiple = (ids, callback) => {
 };
 
 points.get = function (id, callback) {
-    var q = `SELECT * FROM point_logs WHERE id = $1`;
+    var q = `SELECT * FROM point_log WHERE id = $1`;
     db.getObject(q, [id], callback);
 };
 points.list = function (condition, pageIndex, pagesize, callback) {
     var params = [],
-        q_count = `SELECT count(*) count FROM point_logs`,
-        q = `SELECT * FROM point_logs`,
+        q_count = `SELECT count(*) count FROM point_log`,
+        q = `SELECT * FROM point_log`,
         whereStr = " WHERE ",
         sp = '',
         result = {

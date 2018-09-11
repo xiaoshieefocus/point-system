@@ -4,7 +4,7 @@ var points = require('../models/points');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  points.get([], function (err, data) {
+  points.get(1, function (err, data) {
   	console.log(data);
   	res.render('index', { title: 'Express' });
   });

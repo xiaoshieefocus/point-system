@@ -1,8 +1,8 @@
 var db = require('../lib/db'),
     logger = require('../lib/logger').logger,
-    points = {};
+    users = {};
 
-points.create = function (tbl, data, callback) {
+users.create = function (tbl, data, callback) {
   var param_names = [],
       param_chars = [],
       param_values = [];
@@ -16,16 +16,16 @@ points.create = function (tbl, data, callback) {
   db.executeQuery(q, param_values, callback);
 };
 
-points.update = function (data, callback) {
+users.update = function (data, callback) {
     db.updateFields('point_logs', 'id', data.id, data, callback);
 };
-points.remove = function (id, callback) {
+users.remove = function (id, callback) {
     var q = `DELETE FROM point_logs WHERE id = $1`;
 
     db.executeQuery(q, [id], callback);
 };
 
-points.removeMultiple = (ids, callback) => {
+users.removeMultiple = (ids, callback) => {
     var params = [],
         paramIndex = [],
         q = "DELETE FROM point_logs WHERE";
@@ -42,11 +42,11 @@ points.removeMultiple = (ids, callback) => {
     }
 };
 
-points.get = function (id, callback) {
+users.get = function (id, callback) {
     var q = `SELECT * FROM point_logs WHERE id = $1`;
     db.getObject(q, [id], callback);
 };
-points.list = function (condition, pageIndex, pagesize, callback) {
+users.list = function (condition, pageIndex, pagesize, callback) {
     var params = [],
         q_count = `SELECT count(*) count FROM point_logs`,
         q = `SELECT * FROM point_logs`,
@@ -105,4 +105,4 @@ points.list = function (condition, pageIndex, pagesize, callback) {
     });
 };
 
-module.exports = points;
+module.exports = users;
