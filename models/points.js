@@ -196,5 +196,29 @@ points.getPointsTimes = function (condition, callback) {
     db.getObject(q, params, callback);
 };
 
+points.getCompany = function (companyId, callback) {
+
+    var params = [],
+        q = `SELECT SUM(change_points) FROM point_logs`,
+        whereStr = ' WHERE ';
+        date = addDate(new Date(), -30);
+
+    if (companyId) {
+        params.push(companyId);
+        whereStr += ' company_id = $1 AND created >= $2 AND change_points > $3';
+    } else {
+        callback(null, result);
+    }
+    if (whereStr != ' WHERE ') {
+        q += whereStr;
+    }
+    db.getObject(q, [companyId, date, 0], callback);
+};
+function addDate(date,days){ 
+    var d = new Date(date); 
+    d.setDate(d.getDate() + days); 
+    var m = d.getMonth() + 1; 
+    return d.getFullYear() + '-' + m + '-' + d.getDate(); 
+} 
 
 module.exports = points;
