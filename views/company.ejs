@@ -11,6 +11,37 @@
             <div class="company-name">
                 <%= company.name%>
             </div>
+
+            <div class="company-head-right">
+                <span class="head-title">Points</span>
+                <span class="head-value"><%= companyPoints%></span>
+            </div>
+            <div class="company-head-right">
+                <span class="head-title">Discount</span>
+                <span class="head-value"><%= discount%>%</span>
+            </div>
+        </div>
+
+        <div class="point-system-content-helf">
+            <div class="title">Rank</div>
+        <%
+        if (companyPast && companyPast.length) {
+            companyPast.forEach(function (user, i) {
+        %>
+            <div class="content">
+                <img  src="/images/avatar/avatar<%= (user.user_id * 1 % 6 + 1)%>.png">
+                <span class="rank"><%= i+1%>th<span>
+            </div>
+        <%
+            });
+        }
+        %>
+        </div>
+        <div class="point-system-content-helf float-right">
+            <div class="title">Discont</div>
+
+            
+            <div class="title">points</div>
         </div>
     </div>
   </body>

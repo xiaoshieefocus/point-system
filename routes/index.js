@@ -17,38 +17,42 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/company', function (req, res, next) {
-	var companyId = req.query.companyId,
-		discountLevel = config.discountLevel,
-		companyPoints = 0,
-		index = -1,
-		discount = 0,
-		savedMoneyCompany = 0;
-	pointsModel.getCompanyUserPoints({
-	  	companyId: companyId,
-	  	date: 180
-	}, function (err, company) {
-		var pastResults = company.pastResults,
-			activeResults = company.activeResults;
-		activeResults.forEach(function (item) {
-			companyPoints += Number(item.user_points);
-		});
-		pastResults.forEach(function (item) {
-			savedMoneyCompany += Number(item.saved_money);
-		});
-		index = discountLevel.findIndex(item => companyPoints < item.points);
-		if (index > 0) {
-			discount = discountLevel[index].discount;
-		}
-		var templeteData = {
-			discount: discount,
-			companyPoints: companyPoints,
-			companyPast: pastResults,
-			companyActive: activeResults,
-			savedMoneyCompany: savedMoneyCompany,
-			title: 'company'
-		};
-	  	res.render('company', {templeteData: templeteData});
-	});
+    var companyId = req.query.companyId,
+        discountLevel = config.discountLevel,
+        companyPoints = 0,
+        index = -1,
+        discount = 0,
+        savedMoneyCompany = 0;
+    pointsModel.getCompanyUserPoints({
+        companyId: companyId,
+        date: 180
+    }, function (err, company) {
+        var pastResults = company.pastResults,
+            activeResults = company.activeResults;
+        activeResults.forEach(function (item) {
+            companyPoints += Number(item.user_points);
+        });
+        pastResults.forEach(function (item) {
+            savedMoneyCompany += Number(item.saved_money);
+        });
+        index = discountLevel.findIndex(item => companyPoints < item.points);
+        if (index > 0) {
+            discount = discountLevel[index].discount;
+        }
+        companiesModel.get(companyId, function (err, company) {
+            var templeteData = {
+                company: company,
+                discount: discount,
+                companyPoints: companyPoints,
+                companyPast: pastResults,
+                companyActive: activeResults,
+                savedMoneyCompany: savedMoneyCompany,
+                title: 'company'
+            };
+            console.log(templeteData);
+            res.render('company', templeteData);
+        });
+    });
 });
 
 router.post('/actions', function (req, res, next) {
