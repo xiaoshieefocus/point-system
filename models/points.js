@@ -49,7 +49,7 @@ points.get = function (id, callback) {
     var q = `SELECT * FROM point_logs WHERE id = $1`;
     db.getObject(q, [id], callback);
 };
-points.list = function (condition, pageIndex, pagesize, callback) {
+points.list = function (condition, currentPage, pageSize, callback) {
     var params = [],
         q_count = `SELECT count(*) count FROM point_logs`,
         q = `SELECT * FROM point_logs`,
@@ -66,16 +66,29 @@ points.list = function (condition, pageIndex, pagesize, callback) {
         };
 
     if (condition.id) {
-        params.push(condition.startDate);
+        params.push(condition.id);
         whereStr += sp + "id = $" + params.length;
         sp = " AND ";
     }
-
+    if (condition.companyId) {
+        params.push(condition.companyId);
+        whereStr += sp + "company_id = $" + params.length;
+        sp = " AND ";
+    }
+    if (condition.userId) {
+        params.push(condition.userId);
+        whereStr += sp + "user_id = $" + params.length;
+        sp = " AND ";
+    }
+    if (condition.actions) {
+        params.push(condition.actions);
+        whereStr += sp + "actions = $" + params.length;
+        sp = " AND ";
+    }
     if (whereStr != " WHERE ") {
         q_count += whereStr;
         q += whereStr;
     }
-
     db.getObject(q_count, params, function (err, countRs) {
         if (err) {
             callback(err);

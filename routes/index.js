@@ -32,4 +32,25 @@ router.post('/actions', function (req, res, next) {
 	});
 });
 
+router.get('/points/sum?', function(req, res, next) {
+  points.getCompanyOrUserPoints({
+  	companyId: req.query.company,
+  	userId: req.query.user
+  }, function (err, data) {
+  	res.send(data);
+  });
+});
+
+//points/list?company=1&user=170&actions=purchase&page=1&pagesize=100
+router.get('/points/list?', function(req, res, next) {
+  points.list({
+  	companyId: req.query.company,
+  	userId: req.query.user,
+  	actions: req.query.actions
+  }, req.query.page || '1', req.query.pagesize || '10', function (err, data) {
+  	res.send(data);
+  });
+});
+
+
 module.exports = router;
