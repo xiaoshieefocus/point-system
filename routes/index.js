@@ -64,15 +64,6 @@ router.post('/actions', function (req, res, next) {
     });
 });
 
-//points/sum?company=1&user=170
-router.get('/points/sum?', function (req, res, next) {
-    pointsModel.getCompanyOrUserPoints({
-        companyId: req.query.company,
-        userId: req.query.user
-    }, function (err, data) {
-        res.send(data);
-    });
-});
 
 //points/list?company=1&user=170&actions=purchase&page=1&pagesize=100
 router.get('/points/list?', function (req, res, next) {
@@ -99,6 +90,26 @@ router.get('/points/distributor?', function (req, res, next) {
     }, function (err, data) {
         res.send(data);
     });
+});
+
+router.get('/individual?', function (req, res, next) {
+    var result = {
+    	pointsThisMonth : '',
+    	pointsValid : ''
+    };
+    pointsModel.getCompanyOrUserPoints({
+        userId: req.query.user
+    }, function (err, data) {
+    	console.log(data);
+        result.pointsThisMonth = data.sum;
+    });
+    pointsLogsBreakdownModel.getDistributor({
+        user: req.query.user
+    }, function (err, data) {
+        
+    });
+
+    res.send(result);
 });
 
 
