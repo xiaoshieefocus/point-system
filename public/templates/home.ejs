@@ -1,0 +1,217 @@
+
+  <style>
+	/*common*/
+	body {
+		font: 14px PingFangSC-Regular;
+	}
+	a {
+		text-decoration: none;
+	}
+	body {
+  		padding: 50px;
+  		font-size: 14px;
+  		font-family: PingFangSC-Regular;
+ 		background-color: #F8F8F8;
+	}	
+
+	#user, #echart, #other_info {
+		background-color: #fff;
+		width: 1190px;
+		margin: auto;
+	}
+
+	#user {
+		margin-bottom: 24px;
+		padding: 30px 24px;
+		height: 120px;
+		position: relative;
+	}
+
+	#echart {
+		margin-bottom: 18px;
+	}
+	
+	a {
+  		color: #00B7FF;
+	}
+  	/*user*/
+	#user img, #user div {
+		display: table-cell;
+		vertical-align: middle;
+	}
+	#user .info {
+		position: absolute;
+		top: 25%;
+		right: 0;
+	}
+	#user img {
+		height: 60px;
+		width: 60px;
+		margin-right: 24px;
+	}
+	#user p {
+		margin: 0;
+	}
+	#user p span {
+		font-size: 18px;
+		color: #2F3A42;
+		letter-spacing: 0;
+		line-height: 28px;
+	}
+	#user p.user_company {
+		font-size: 12px;
+		color: #212121;
+		letter-spacing: 0;
+		line-height: 18px;
+	}
+	#user ul {
+		list-style-type:none;
+		margin:0;
+		padding:0;
+	}
+	#user ul li {
+		float: left;
+		margin-right: 65px;
+	}
+	#user ul li p:nth-child(1){
+		font-size: 14px;
+		color: #212121;
+		letter-spacing: 0;
+		line-height: 22px;
+	}
+	#user ul li p:nth-child(2){
+		font-size: 24px;
+		color: #4A4A4A;
+		letter-spacing: 0;
+		line-height: 36px;
+	}
+	#user i::before {
+		color: #FF9F41; 
+	}
+	#user i.fa-star.shawdow::before {
+		color: #E0E0E1;
+	}
+</style>
+<style>
+	/*other_info*/
+	#other_info {
+		background-color: #F8F8F8;
+	}
+	#other_info .left, #other_info .right {
+		width: 584px;
+		background-color: #fff;
+		display: inline-block;
+	}
+	#other_info .left {
+		margin-right: 18px;
+	}
+	#other_info .redeem_tip{
+		padding: 29px 24px;
+		height: 156px;
+        background: -webkit-linear-gradient(left, #E29074 , #DE696C);
+        background: -o-linear-gradient(right, #E29074, #DE696C); 
+        background: -moz-linear-gradient(right, #E29074, #DE696C); 
+        background: linear-gradient(to right, #E29074 , #DE696C); 	
+    }
+    #other_info .redeem_tip img {
+    	width: 96px;
+    	height: 98px;
+    	margin-right: 30px;
+    }
+    #other_info .redeem_tip p {
+    	margin: 0;
+    }
+    #other_info .redeem_tip p:nth-child(1){
+		color: #fff;
+		font-size: 24px;
+		letter-spacing: 0;
+		margin-bottom: 19px;
+    }
+    #other_info .redeem_tip .get_point{
+    	background: #FFFFFF;
+		border-radius: 18px;
+		height: 36px;
+		font-size: 14px;
+        padding: 0 18px;
+    }
+    #other_info .redeem_tip .get_point a{
+		color: #E37236;
+		font-size: 14px;
+		line-height: 22px;
+    }
+    #other_info .redeem_tip div{
+    	display: table-cell;
+		vertical-align: middle;
+    }
+</style>
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <script src="//cdn.bootcss.com/echarts/4.1.0/echarts.simple.min.js"></script>
+	<div id="user">
+		<div>
+			<img src="/images/avatar/avatar4.png" alt="" class="personas">
+		</div>
+		<div>
+			<p>
+				<span>DS</span>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star shawdow" aria-hidden="true"></i>
+			</p>
+			<p class="user_company">Engneer in <a href="javascript:void(0) ">xxx company</a></p>
+		</div>
+		<div class="info">
+			<ul>
+				<li>
+					<p>Coupons</p>
+					<p>1</p>
+				</li>
+				<li>
+					<p>Points</p>
+					<p>2</p>
+				</li>
+				<li>
+					<p>Discount</p>
+					<p>3</p>
+				</li>
+				<li>
+					<p>Rank</p>
+					<p>4</p>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="echart">
+		
+	</div>
+	<div id="other_info">
+		<div class="left">
+			<div class="redeem_tip">
+				<div>
+					<img src="/images/avatar/礼品.png" alt="">
+				</div>
+				<div>
+					<p>You have <span>200</span> points to redeem!</p>
+					<div class="get_point">
+						<a href="">Get the points now <i class="fa fa-arrow-right"></i></a>
+					</div>
+				</div>
+			</div>
+			<div>
+				
+			</div>
+		</div>
+		<div class="right">
+			<div>
+				Coupons
+			</div>
+			<div>
+				
+			</div>
+			<div>
+				
+			</div>
+		</div>
+	</div>
