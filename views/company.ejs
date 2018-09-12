@@ -11,6 +11,61 @@
             <div class="company-name">
                 <%= company.name%>
             </div>
+
+            <div class="company-head-right">
+                <span class="head-title">Points</span>
+                <span class="head-value"><%= companyPoints%></span>
+            </div>
+            <div class="company-head-right">
+                <span class="head-title">Discount</span>
+                <span class="head-value"><%= discount%>%</span>
+            </div>
+        </div>
+
+        <div class="point-system-content-helf">
+            <div class="title">Rank</div>
+        <%
+        if (companyPast && companyPast.length) {
+            companyPast.forEach(function (user, i) {
+        %>
+            <div class="content">
+                <img  src="/images/avatar/avatar<%= (user.user_id * 1 % 6 + 1)%>.png">
+                <div class="userinfo">
+                    <span class="rank"><%= i+1%>th</span>
+                    <span class="username"><%= user.username || 'User' + user.user_id%></span>
+                    <span class="secondline">
+                        Orders <%= user.order_num%> | Saved <%= user.saved_money%> | Points <%= user.user_points%>
+                    </span>
+                </div>
+                <a class="action-btn" href="#">View Details</a>
+            </div>
+        <%
+            });
+        }
+        %>
+        </div>
+        <div class="point-system-content-helf float-right">
+            <div class="title">Discount</div>
+            <div class="right-content">
+                <img class="right-img" src="/images/discount@2x.png">
+                <span class="right-value">
+                    <%= discount%>% off
+                </span>
+                <span class="right-dre">
+                    on thr order over $<%= savedMoneyCompany%>
+                </span>
+            </div>
+            <div class="title" style="margin-top: 30px;">points</div>
+            <div class="right-content">
+                <img class="right-img" src="/images/points@2x.png">
+                <span class="right-value">
+                    <%= companyPoints%>
+                </span>
+                <span class="right-dre">
+                    points gained in this month
+                </span>
+            </div>
+            
         </div>
     </div>
   </body>

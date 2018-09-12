@@ -7,10 +7,10 @@
         "database": "point-system"
     },
     "discountLevel": [
-    	{"points": 10000, "discount": 0.98},
-    	{"points": 50000, "discount": 0.95},
-    	{"points": 100000, "discount": 0.9},
-    	{"points": 150000, "discount": 0.85}
+    	{"points": 10000, "discount": 0.02},
+    	{"points": 50000, "discount": 0.05},
+    	{"points": 100000, "discount": 0.1},
+    	{"points": 150000, "discount": 0.15}
     ],
     "actionPoints": {
     	"bom": [
