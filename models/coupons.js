@@ -1,19 +1,21 @@
 var db = require('../lib/db'),
     logger = require('../lib/logger').logger,
+    moment = require('moment'),
+    config = require('../configs/global/config'),
     coupons = {};
 
 coupons.create = function (tbl, data, callback) {
-  var param_names = [],
-      param_chars = [],
-      param_values = [];
+    var param_names = [],
+        param_chars = [],
+        param_values = [];
 
-  for (var k in data) {
+    for (var k in data) {
         param_names.push(k);
         param_values.push(data[k]);
         param_chars.push('$' + param_values.length);
-  }
-  var q = "INSERT INTO " + tbl + " (" + param_names.join(", ") + ") VALUES (" + param_chars.join(", ") + ") RETURNING *";
-  db.executeQuery(q, param_values, callback);
+    }
+    var q = "INSERT INTO " + tbl + " (" + param_names.join(", ") + ") VALUES (" + param_chars.join(", ") + ") RETURNING *";
+    db.executeQuery(q, param_values, callback);
 };
 
 coupons.update = function (data, callback) {
@@ -103,6 +105,41 @@ coupons.list = function (condition, pageIndex, pagesize, callback) {
             }
         }
     });
+};
+
+coupons.getCouponToSeller = function (coupon_points) {
+    var items = [],
+        searchItem = {},
+        year = parseInt(moment().format("YYYY")),
+        month = parseInt(moment().format('M')),
+        couponsItems = config.points2coupon;
+
+    if (couponsItems && couponsItems.length) {
+        couponsItems.forEach(function (item) {
+            items.push({
+                batch_no: moment().format("YYYYMM") + "-" + item.coupon[1],
+                start_date: moment().format("YYYY-MM") + '-01',
+                end_date: moment(moment().format("YYYY-MM") + '-01').add(2, 'months').subtract(1, 'days').format("YYYY-MM-DD"),
+                status: 'active',
+                allocated: moment().format("YYYY-MM-DD"),
+                allocated_count: 1,
+                min_price: item.coupon[0],
+                discount: item.coupon[1],
+                points: item.points
+            });
+        });
+        if (coupon_points) {
+            items.forEach(function (item) {
+                searchItem = item;
+                return;
+            });
+            return searchItem;
+        } else {
+            return items;
+        }
+    } else {
+        return [];
+    }
 };
 
 module.exports = coupons;
