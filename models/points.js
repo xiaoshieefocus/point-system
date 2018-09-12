@@ -213,9 +213,9 @@ points.getPointsTimes = function (condition, callback) {
 points.getCompanyOrUserPoints = function (condition, callback) {
 
     var params = [],
-        q = `SELECT SUM(change_points) AS user_points, user_id FROM point_logs`,
+        q = `SELECT SUM(change_points) AS user_points, user_id, SUM(saved_money) AS saved_money, SUM(CASE WHEN actions = 'purchase' THEN 1 ELSE 0 END) AS order_num FROM point_logs`,
         whereStr = ' WHERE ';
-        date = moment().subtract(config.pointsActive, 'days').format("YYYY-MM-DD");
+        date = moment().subtract(condition.date, 'days').format("YYYY-MM-DD");
     
     whereStr += ' created >= $1 AND change_points > $2 ';
     params.push(date);
@@ -234,7 +234,6 @@ points.getCompanyOrUserPoints = function (condition, callback) {
     db.executeQuery(q, params, callback);
 };
 
-points.get
 
 
 

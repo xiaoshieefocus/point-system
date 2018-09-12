@@ -17,16 +17,21 @@ router.get('/', function (req, res, next) {
 
 router.get('/company', function (req, res, next) {
 	var companyId = req.query.companyId,
-		companyPoints = 0;
+		companyPoints = 0,
+		savedMoneyCompany = 0;
 	pointsModel.getCompanyOrUserPoints({
-	  	companyId: companyId
+	  	companyId: companyId,
+	  	date: 180
 	}, function (err, company) {
+		//console.log(company);
 		company.forEach(function (item) {
 			companyPoints += Number(item.user_points);
+			savedMoneyCompany += Number(item.saved_money);
 		});
 		var templeteData = {
 			companyPoints: companyPoints,
 			companyMembers: company,
+			savedMoneyCompany: savedMoneyCompany,
 			title: 'company'
 		};
 	  	res.render('company', {templeteData: templeteData});
