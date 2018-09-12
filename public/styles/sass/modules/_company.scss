@@ -1,0 +1,189 @@
+body.point-system {
+    background: #F8F8F8;
+    padding: 0;
+    margin: 0;
+
+    >.header {
+        height: 120px;
+        background: #fff;
+        padding: 30px 24px;
+        @include clearfix;
+
+        .user-avatar-img {
+            float: left;
+            width: 60px;
+            height: 60px;
+            margin-right: 24px;
+        }
+
+        .company-name {
+            font-size: 18px;
+            line-height: 28px;
+            float: left;
+            color: #2F3A42;
+
+            .location {
+                font-size: 12px;
+                color: #212121;
+                line-height: 18px;
+            }
+        }
+
+        .stars {
+            float: left;
+        }
+
+        .right-part {
+            float: right;
+            margin-left: 60px;
+
+            .head-title {
+                font-size: 14px;
+                color: #212121;
+                line-height: 22px;
+            }
+
+            .head-value {
+                font-size: 24px;
+                color: #4A4A4A;
+                line-height: 36px;
+                font-weight: lighter;
+            }
+        }
+    }
+
+    >.tabs {
+        padding: 22px 24px 0;
+        font-size: 0;
+        background-color: #fff;
+        border-bottom: 1px solid #F5F4F5;
+
+        .tab-item {
+            display: inline-block;
+            height: 44px;
+            line-height: 44px;
+            font-size: 14px;
+            color: #2F3A42;
+            font-weight: bold;
+            margin-right: 48px;
+
+            &.active {
+                border-bottom: 2px solid #31A1C2;
+            }
+        }
+
+        .export {
+            @include general_primary-button(72px, 26px);
+            float: right;
+            margin-top: 10px;
+        }
+    }
+
+
+    > .info {
+        margin-top: 18px;
+
+        >.half {
+            width: 586px;
+            min-height: 150px;
+            background-color: #fff;
+            padding: 24px;
+
+            .title {
+                font-size: 14px;
+                color: #2F3A42;
+                line-height: 22px;
+                font-weight: bold;
+                margin-bottom: 12px;
+            }
+
+            .time {
+                font-size: 12px;
+                color: #666666;
+                line-height: 18px;
+            }
+
+            .rank-item {
+                width: 100%;
+                height: 65px;
+                border-top: 1px dashed #DCDCDC;
+                padding: 11px 0 12px;
+
+                &.first {
+                    border-top: 0;
+                }
+
+                img {
+                    float: left;
+                    width: 42px;
+                    height: 42px;
+                    margin-right: 18px;
+                }
+
+                .userinfo {
+                    float: left;
+                    width: auto;
+
+                    .rank {
+                        font-size: 12px;
+                        color: #E37236;
+                        line-height: 18px;
+                        font-weight: bold;
+                    }
+    
+                    .username {
+                        font-size: 12px;
+                        color: #212121;
+                        line-height: 18px;
+                        margin-left: 6px;
+                    }
+    
+                    .secondline {
+                        font-size: 12px;
+                        color: #666666;
+                        line-height: 18px;
+                    }
+                }
+
+                .view-detail {
+                    @include accent_secondary-button(84px, 26px);
+                    float: right;
+                    margin-top: 7px;
+                }
+            }
+
+            .discount-item {
+                height: 36px;
+                line-height: 36px;
+                margin-bottom: 30px;
+
+                &.last {
+                    margin-bottom: 0;
+                }
+
+                img {
+                    width: 36px;
+                    height: 36px;
+                    margin-right: 18px;
+                    vertical-align: middle;
+                }
+
+                .amount {
+                    font-size: 24px;
+                    color: #4A4A4A;
+                    margin-right: 6px;
+                    font-weight: lighter;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+    
+                .detail {
+                    font-size: 12px;
+                    color: #212121;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+}

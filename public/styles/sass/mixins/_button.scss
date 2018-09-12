@@ -1,0 +1,296 @@
+@mixin button($width: 96px, $height: 30px) {
+    border-radius: 2px;
+    width: $width;
+    height: $height;
+    line-height: $height;
+    text-align: center;
+    font-size: 12px;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+  
+    &.disabled {
+      cursor: not-allowed;
+    }
+  }
+  
+  @mixin text-btn-default {
+    color: #31A1C2;
+    font-size: 12px;
+  
+    &:hover,
+    &:active {
+      color: #2C90AE;
+      text-decoration: underline;
+    }
+  
+    &.disabled {
+      opacity: .5;
+    }
+  }
+  
+  @mixin general_primary-button($width: 96px, $height: 30px) {
+    @include button($width, $height);
+    background-image: linear-gradient(-180deg, #31A1C2 0%, #2C90AE 100%);
+    border: 1px solid #2C90AE;
+    border-radius: 2px;
+    color: #FFFFFF;
+    line-height: $height - 2px;
+  
+    &:hover {
+      background-image: linear-gradient(-180deg, #2C90AE 4%, #27819C 100%);
+      border: 1px solid #27819C;
+      color: #FFFFFF;
+    }
+  
+    &:active {
+      background-image: linear-gradient(0deg, #2C90AE 0%, #27819C 100%);
+      border: 1px solid #27819C;
+      color: #FFFFFF;
+    }
+  
+    &.disabled,
+    &:disabled {
+      opacity: .5;
+    }
+  }
+  
+  @mixin general_secondary-button($width: 96px, $height: 30px) {
+    @include button($width, $height);
+    background-image: linear-gradient(-180deg, #FEFEFE 0%, #F0F0F0 100%);
+    border: 1px solid rgba(47,58,66,0.30);
+    color: #31A1C2;
+    line-height: $height - 2px;
+  
+    &:hover {
+      background-image: linear-gradient(-180deg, #FEFEFE 0%, #F0F0F0 100%);
+      border: 1px solid #46AAC8;
+      color: #31A1C2;
+    }
+  
+    &:active {
+      background-image: linear-gradient(0deg, #FEFEFE 0%, #F0F0F0 100%);
+      border: 1px solid #2C90AE;
+      color: #31A1C2;
+    }
+  
+    &.disabled,
+    &:disabled {
+      opacity: .5;
+    }
+  }
+  
+  @mixin general_tertiary-button($width: 96px, $height: 30px) {
+    @include button($width, $height);
+    font-size: 12px;
+    color: #4A4A4A;
+  
+    &:hover {
+      color: #2C90AE;
+    }
+  
+    &:active {
+      color: #2C90AE;
+    }
+  
+    &.disabled,
+    &:disabled {
+      color: #9B9B9B;
+    }
+  }
+  
+  @mixin negative_primary-button($width: 96px, $height: 30px) {
+    @include button($width, $height);
+    background-image: linear-gradient(-180deg, #E4233B 0%, #CC1F34 100%);
+    border: 1px solid #CC1F34;
+    border-radius: 2px;
+    color: #FFFFFF;
+    line-height: $height - 2px;
+  
+    &:hover {
+      background-image: linear-gradient(0deg, #B71B2E 0%, #CC1F34 100%);
+      border: 1px solid #B71B2E;
+      color: #FFFFFF;
+    }
+  
+    &:active {
+      background-image: linear-gradient(-180deg, #B71B2E 0%, #CC1F34 100%);
+      border: 1px solid #B71B2E;
+      color: #FFFFFF;
+    }
+  
+    &.disabled,
+    &:disabled {
+      opacity: .5;
+    }
+  }
+  
+  @mixin negative_secondary-button($width: 96px, $height: 30px) {
+    @include button($width, $height);
+    background-image: linear-gradient(-180deg, #FEFEFE 0%, #F0F0F0 100%);
+    border: 1px solid rgba(47,58,66,0.30);
+    color: #E4233B;
+    line-height: $height - 2px;
+  
+    &:hover {
+      background-image: linear-gradient(-180deg, #FEFEFE 0%, #F0F0F0 100%);
+      border: 1px solid #E6394E;
+      color: #E6394E;
+    }
+  
+    &:active {
+      background-image: linear-gradient(0deg, #FEFEFE 0%, #F0F0F0 100%);
+      border: 1px solid #CC1F34 ;
+      color: #E6394E;
+    }
+  
+    &.disabled,
+    &:disabled {
+      opacity: .5;
+    }
+  }
+  
+  @mixin negative_tertiary-button($width: 96px, $height: 30px) {
+    @include button($width, $height);
+    font-size: 12px;
+    color: #4A4A4A;
+  
+    &:hover {
+      color: #CC1F34;
+    }
+  
+    &:active {
+      color: #CC1F34;
+    }
+  
+    &.disabled,
+    &:disabled {
+      color: #9B9B9B;
+    }
+  }
+  
+  @mixin accent-primary-button($width: 96px, $height: 30px) {
+    @include button($width, $height);
+    background-image: linear-gradient(-180deg, #E37236 0%, #CB6630 100%);
+    border: 1px solid #CB6630;
+    color: #ffffff;
+    line-height: $height - 2px;
+  
+    &:hover {
+      background-image: linear-gradient(0deg, #B65B2B 0%, #CB6630 100%);
+      border: 1px solid #B65B2B;
+      color: #ffffff;
+    }
+  
+    &:active {
+      background-image: linear-gradient(-180deg, #B65B2B 0%, #CB6630 100%);
+      border: 1px solid #B65B2B;
+      color: #ffffff;
+    }
+  
+    &:disabled,
+    &.disabled {
+      opacity: .5;
+    }
+  }
+  
+  @mixin accent_secondary-button($width: 96px, $height: 30px) {
+    @include button($width, $height);
+    background-image: linear-gradient(-180deg, #FEFEFE 0%, #F0F0F0 100%);
+    border: 1px solid rgba(47,58,66,0.30);
+    color: #E37236;
+    line-height: $height - 2px;
+  
+    &:hover {
+      background-image: linear-gradient(-180deg, #FEFEFE 0%, #F0F0F0 100%);
+      border: 1px solid #E5804A;
+      color: #E37236;
+    }
+  
+    &:active {
+      background-image: linear-gradient(0deg, #FEFEFE 0%, #F0F0F0 100%);
+      border: 1px solid #CB6630;
+      color: #E37236;
+    }
+  
+    &:disabled,
+    &.disabled {
+      opacity: .5;
+    }
+  }
+  
+  @mixin accent_tertiary-button($width: 96px, $height: 30px) {
+    @include button($width, $height);
+    font-size: 12px;
+    color: #4A4A4A;
+  
+    &:hover {
+      color: #CB6630;
+    }
+  
+    &:active {
+      color: #CB6630;
+    }
+  
+    &.disabled,
+    &:disabled {
+      color: #9B9B9B;
+    }
+  }
+  
+  @mixin button-filter($width: 55px, $height: 30px) {
+    display: inline-block;
+    height: $height;
+    font-size: 0;
+  
+    a {
+      display: inline-block;
+      width: $width;
+      height: $height;
+      line-height: $height - 2px;
+      font-size: 12px;
+      color: #31A1C2;
+      text-align: center;
+      background-image: linear-gradient(-180deg, #FEFEFE 0%, #F0F0F0 100%);
+      border: 1px solid rgba(47,58,66,0.30);
+  
+      &:first-child {
+        border-radius: 2px 0 0 2px;
+        border-right: 0;
+  
+        &.active {
+          border-right: 1px solid #31A1C2 !important;
+        }
+  
+        &:hover {
+          border-right: 0;
+        }
+      }
+  
+      &:last-child {
+        border-radius: 0 2px 2px 0;
+        border-left: 0;
+  
+        &.active {
+          border-left: 1px solid #31A1C2 !important;
+        }
+  
+        &:hover {
+          border-left: 0;
+        }
+      }
+  
+      &.active {
+        background-image: none;
+        background-color: rgba(49,161,194,0.10);
+        border: 1px solid #31A1C2;
+      }
+  
+      &:hover {
+        border: 1px solid #31A1C2;
+      }
+    }
+  }
