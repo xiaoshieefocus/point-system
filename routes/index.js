@@ -4,6 +4,7 @@ var express = require('express'),
     companiesModel = require('../models/companies'),
     pointsLogsBreakdownModel = require('../models/pointsLogsBreakdown'),
     config = require('../configs/global/config'),
+    async = require('async'),
     pointsHelper = require('../lib/helpers/points');
 
 /* GET home page. */
@@ -109,23 +110,33 @@ router.get('/points/distributor?', function (req, res, next) {
 
 router.get('/individual?', function (req, res, next) {
     var result = {
-    	pointsThisMonth : '',
-    	pointsValid : ''
-    };
-    pointsModel.getCompanyOrUserPoints({
-        userId: req.query.user
-    }, function (err, data) {
-    	console.log(data);
-        result.pointsThisMonth = data.sum;
-    });
-    pointsLogsBreakdownModel.getDistributor({
-        user: req.query.user
-    }, function (err, data) {
-        
-    });
+    		pointsThisMonth: '',
+    		pointsValid: ''
+    	};
+    async.parallel({
+    	pointsThisMonth : callback => {
+    		pointsModel.getCompanyOrUserPoints({userId: req.query.user}, function (err, data) {
+	        	result.pointsThisMonth = data.sum;
+	        	callback();
+	    	})
+	    	
 
-    res.send(result);
+    	},
+    	pointsValid : callback => {
+    		pointsModel.getPointsForUserId(req.query.user, function (err, data) {
+	        	pointsValid = data.points;
+	        	callback();
+    		})
+    		
+    	}
+    }, (err, data) => {
+	    
+	    res.send(result);
+	});
+
+    
 });
+
 
 
 module.exports = router;
