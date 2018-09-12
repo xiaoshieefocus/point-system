@@ -210,7 +210,7 @@ points.getPointsTimes = function (condition, callback) {
     db.getObject(q, params, callback);
 };
 
-points.getCompanyOrUserPoints = function (condition, callback) {
+points.getCompanyUserPoints = function (condition, callback) {
 
     var params = [],
         q = `SELECT SUM(change_points) AS user_points, user_id, SUM(saved_money) AS saved_money, SUM(CASE WHEN actions = 'purchase' THEN 1 ELSE 0 END) AS order_num FROM point_logs`,
@@ -231,7 +231,27 @@ points.getCompanyOrUserPoints = function (condition, callback) {
     whereStr += ' GROUP BY user_id';
     q += whereStr;
     
-    db.executeQuery(q, params, callback);
+    db.executeQuery(q, params, function (err, pastResults) {
+        if (err) {
+            var msg = 'get company history info failed';
+            callback(true, msg);
+        } else {
+            date = moment().subtract(config.pointsActive, 'days').format("YYYY-MM-DD");
+            params[0] = date;
+            db.executeQuery(q, params, function (err, activeResults) {
+                if (err) {
+                    msg = 'get company active info failed';
+                    callback(true, msg);
+                } else {
+                    var wholeResults = {
+                        pastResults: pastResults,
+                        activeResults: activeResults
+                    };
+                    callback(false, wholeResults);
+                }
+            });
+        }
+    });
 };
 
 

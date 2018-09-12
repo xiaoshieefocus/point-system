@@ -17,20 +17,32 @@ router.get('/', function (req, res, next) {
 
 router.get('/company', function (req, res, next) {
 	var companyId = req.query.companyId,
+		discountLevel = config.discountLevel,
 		companyPoints = 0,
+		index = -1,
+		discount = 0,
 		savedMoneyCompany = 0;
-	pointsModel.getCompanyOrUserPoints({
+	pointsModel.getCompanyUserPoints({
 	  	companyId: companyId,
 	  	date: 180
 	}, function (err, company) {
-		//console.log(company);
-		company.forEach(function (item) {
+		var pastResults = company.pastResults,
+			activeResults = company.activeResults;
+		activeResults.forEach(function (item) {
 			companyPoints += Number(item.user_points);
+		});
+		pastResults.forEach(function (item) {
 			savedMoneyCompany += Number(item.saved_money);
 		});
+		index = discountLevel.findIndex(item => companyPoints < item.points);
+		if (index > 0) {
+			discount = discountLevel[index].discount;
+		}
 		var templeteData = {
+			discount: discount,
 			companyPoints: companyPoints,
-			companyMembers: company,
+			companyPast: pastResults,
+			companyActive: activeResults,
 			savedMoneyCompany: savedMoneyCompany,
 			title: 'company'
 		};
