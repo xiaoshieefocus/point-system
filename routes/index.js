@@ -14,8 +14,22 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.get('/admin', function (req, res, next) {
-    res.render('admin', { title: 'admin' });
+router.get('/company', function (req, res, next) {
+	var companyId = req.query.companyId,
+		companyPoints = 0;
+	pointsModel.getCompanyOrUserPoints({
+	  	companyId: companyId
+	}, function (err, company) {
+		company.forEach(function (item) {
+			companyPoints += Number(item.user_points);
+		});
+		var templeteData = {
+			companyPoints: companyPoints,
+			companyMembers: company,
+			title: 'company'
+		};
+	  	res.render('company', {templeteData: templeteData});
+	});
 });
 
 router.post('/actions', function (req, res, next) {

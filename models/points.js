@@ -213,7 +213,7 @@ points.getPointsTimes = function (condition, callback) {
 points.getCompanyOrUserPoints = function (condition, callback) {
 
     var params = [],
-        q = `SELECT SUM(change_points) FROM point_logs`,
+        q = `SELECT SUM(change_points) AS user_points, user_id FROM point_logs`,
         whereStr = ' WHERE ';
         date = moment().subtract(config.pointsActive, 'days').format("YYYY-MM-DD");
     
@@ -226,11 +226,15 @@ points.getCompanyOrUserPoints = function (condition, callback) {
     }
     if (condition.companyId) {
         params.push(condition.companyId);
-        whereStr += ' AND company_id = $' + params.length;    
+        whereStr += ' AND company_id = $' + params.length;   
     }
+    whereStr += ' GROUP BY user_id';
     q += whereStr;
-    db.getObject(q, params, callback);
+    
+    db.executeQuery(q, params, callback);
 };
+
+points.get
 
 
 

@@ -5,7 +5,6 @@ var express = require('express'),
     config = require('../configs/global/config'),
     pointsHelper = require('../lib/helpers/points');
 
-/* GET home page. */
 
 router.post('/buyCounpon', function (req, res, next) {
     var result = {
