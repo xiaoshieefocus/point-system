@@ -14,4 +14,9 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/admin', function(req, res, next) {
+	console.log('---ddd---');
+	res.render('admin', {title: 'admin'});
+});
+
 module.exports = router;
