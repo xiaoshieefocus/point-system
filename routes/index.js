@@ -1,6 +1,7 @@
 var express = require('express'),
     router = express(),
     pointsModel = require('../models/points'),
+    pointsLogsBreakdownModel = require('../models/pointsLogsBreakdown'),
     config = require('../configs/global/config'),
     pointsHelper = require('../lib/helpers/points');
 
@@ -54,7 +55,16 @@ router.get('/points/list?', function(req, res, next) {
 
 //points/sumexpire?user=170
 router.get('/points/sumexpire?', function(req, res, next) {
-  points.getPointsForUserId(req.query.user, function (err, data) {
+  pointsModel.getPointsForUserId(req.query.user, function (err, data) {
+  	res.send(data);
+  });
+});
+
+router.get('/points/distributor?', function(req, res, next) {
+  pointsLogsBreakdownModel.getDistributor({
+  	company: req.query.company,
+  	user: req.query.user
+  }, function (err, data) {
   	res.send(data);
   });
 });
