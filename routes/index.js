@@ -99,19 +99,11 @@ router.get('/points/sumexpire?', function (req, res, next) {
     });
 });
 
-router.get('/points/distributor?', function (req, res, next) {
-    pointsLogsBreakdownModel.getDistributor({
-        company: req.query.company,
-        user: req.query.user
-    }, function (err, data) {
-        res.send(data);
-    });
-});
-
 router.get('/individual?', function (req, res, next) {
     var result = {
     		pointsThisMonth: '',
-    		pointsValid: ''
+    		pointsValid: '',
+    		distributors: ''
     	};
     async.parallel({
     	pointsThisMonth : callback => {
@@ -119,15 +111,21 @@ router.get('/individual?', function (req, res, next) {
 	        	result.pointsThisMonth = data.sum;
 	        	callback();
 	    	})
-	    	
-
     	},
     	pointsValid : callback => {
     		pointsModel.getPointsForUserId(req.query.user, function (err, data) {
-	        	pointsValid = data.points;
+	        	result.pointsValid = data.points;
 	        	callback();
     		})
     		
+    	},
+    	distributor : callback => {
+    		pointsLogsBreakdownModel.getDistributor({
+		        user: req.query.user
+		    }, function (err, data) {
+		        result.distributors = data;
+		        callback();
+		    });
     	}
     }, (err, data) => {
 	    
