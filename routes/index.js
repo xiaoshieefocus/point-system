@@ -23,31 +23,46 @@ router.get('/company', function (req, res, next) {
 		index = -1,
 		discount = 0,
 		savedMoneyCompany = 0;
-	pointsModel.getCompanyUserPoints({
-	  	companyId: companyId,
-	  	date: 180
-	}, function (err, company) {
-		var pastResults = company.pastResults,
-			activeResults = company.activeResults;
-		activeResults.forEach(function (item) {
-			companyPoints += Number(item.user_points);
-		});
-		pastResults.forEach(function (item) {
-			savedMoneyCompany += Number(item.saved_money);
-		});
-		index = discountLevel.findIndex(item => companyPoints < item.points);
-		if (index > 0) {
-			discount = discountLevel[index].discount;
+
+	companiesModel.get(companyId, function (err, company) {
+		if (err) {
+			res.json('get company failed');
 		}
-		var templeteData = {
-			discount: discount,
-			companyPoints: companyPoints,
-			companyPast: pastResults,
-			companyActive: activeResults,
-			savedMoneyCompany: savedMoneyCompany,
-			title: 'company'
-		};
-	  	res.render('company', {templeteData: templeteData});
+		pointsModel.getCompanyUserPoints({
+		  	companyId: companyId,
+		  	date: 180
+		}, function (err, userData) {
+			var pastResults = userData.pastResults,
+				activeResults = userData.activeResults;
+			activeResults.forEach(function (item) {
+				companyPoints += Number(item.user_points);
+			});
+			pastResults.forEach(function (item) {
+				savedMoneyCompany += Number(item.saved_money);
+			});
+			pastResults.forEach(function (item) {
+				item.saved_rate = ((item.saved_money / savedMoneyCompany).toFixed(4)) * 100;
+			});
+			pastResults.sort(function (a, b) {
+				if (a.user_points > b.user_points) return -1;
+				if (a.saved_rate > b.saved_rate) return -1;
+				return 1;
+			});
+			index = discountLevel.findIndex(item => companyPoints < item.points);
+			if (index > 0) {
+				discount = discountLevel[index].discount;
+			}
+			
+		  	res.render('company', {
+		  		company: company,
+		  		discount: discount,
+				companyPoints: companyPoints,
+				companyPast: pastResults,
+				companyActive: activeResults,
+				savedMoneyCompany: savedMoneyCompany,
+				title: 'company'
+		  	});
+		});
 	});
 });
 
