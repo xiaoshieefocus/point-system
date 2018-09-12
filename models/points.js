@@ -214,9 +214,9 @@ points.getCompanyOrUserPoints = function (condition, callback) {
 
     var params = [],
         q = `SELECT SUM(change_points) AS user_points, user_id, SUM(saved_money) AS saved_money, SUM(CASE WHEN actions = 'purchase' THEN 1 ELSE 0 END) AS order_num FROM point_logs`,
-        whereStr = ' WHERE ';
+        whereStr = ' WHERE ',
         date = moment().subtract(condition.date, 'days').format("YYYY-MM-DD");
-    
+
     whereStr += ' created >= $1 AND change_points > $2 ';
     params.push(date);
     params.push(0);
@@ -226,11 +226,11 @@ points.getCompanyOrUserPoints = function (condition, callback) {
     }
     if (condition.companyId) {
         params.push(condition.companyId);
-        whereStr += ' AND company_id = $' + params.length;   
+        whereStr += ' AND company_id = $' + params.length;
     }
     whereStr += ' GROUP BY user_id';
     q += whereStr;
-    
+
     db.executeQuery(q, params, callback);
 };
 

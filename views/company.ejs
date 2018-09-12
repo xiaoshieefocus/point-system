@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= templeteData.title %></title>
+    <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
-  <body>
-    <h1><%= templeteData.title %></h1>
-    <p>Welcome to <%= templeteData.title %></p>
+  <body class="point-system company-detail">
+    <div class="point-system-content-box">
+        <div class="point-system-content">
+            <img class="user-avatar-img" src="/images/avatar/avatar<%= (company.name.length % 6 + 1)%>.png">
+            <div class="company-name">
+                <%= company.name%>
+            </div>
+        </div>
+    </div>
   </body>
 </html>
