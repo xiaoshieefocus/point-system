@@ -32,6 +32,7 @@ router.post('/actions', function (req, res, next) {
 	});
 });
 
+//points/sum?company=1&user=170
 router.get('/points/sum?', function(req, res, next) {
   points.getCompanyOrUserPoints({
   	companyId: req.query.company,
@@ -52,5 +53,11 @@ router.get('/points/list?', function(req, res, next) {
   });
 });
 
+//points/sumexpire?user=170
+router.get('/points/sumexpire?', function(req, res, next) {
+  points.getPointsForUserId(req.query.user, function (err, data) {
+  	res.send(data);
+  });
+});
 
 module.exports = router;
