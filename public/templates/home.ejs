@@ -98,12 +98,12 @@
 		background-color: #F8F8F8;
 	}
 	#other_info .left, #other_info .right {
-		width: 584px;
+		width: 49.3%;
 		background-color: #fff;
 		display: inline-block;
 	}
 	#other_info .left {
-		margin-right: 18px;
+		float: left;
 	}
 	#other_info .redeem_tip{
 		padding: 29px 24px;
@@ -143,6 +143,14 @@
     	display: table-cell;
 		vertical-align: middle;
     }
+    #radar {
+    	height: 495px;
+    	margin-top: 18px;
+    }
+
+    #other_info .right {
+		float: right;
+	}
 </style>
   <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
@@ -199,7 +207,7 @@
 					</div>
 				</div>
 			</div>
-			<div>
+			<div id="radar">
 				
 			</div>
 		</div>
