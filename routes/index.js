@@ -1,14 +1,13 @@
 var express = require('express'),
     router = express(),
-    points = require('../models/points'),
-    coupons = require('../models/coupons'),
+    pointsModel = require('../models/points'),
     config = require('../configs/global/config'),
     pointsHelper = require('../lib/helpers/points');
 
 /* GET home page. */
 
 router.get('/', function (req, res, next) {
-    points.get(1, function (err, data) {
+    pointsModel.get(1, function (err, data) {
         console.log(data);
         console.log(config);
         res.render('index', { title: 'Express' });
@@ -34,7 +33,7 @@ router.post('/actions', function (req, res, next) {
 
 //points/sum?company=1&user=170
 router.get('/points/sum?', function(req, res, next) {
-  points.getCompanyOrUserPoints({
+  pointsModel.getCompanyOrUserPoints({
   	companyId: req.query.company,
   	userId: req.query.user
   }, function (err, data) {
@@ -44,7 +43,7 @@ router.get('/points/sum?', function(req, res, next) {
 
 //points/list?company=1&user=170&actions=purchase&page=1&pagesize=100
 router.get('/points/list?', function(req, res, next) {
-  points.list({
+  pointsModel.list({
   	companyId: req.query.company,
   	userId: req.query.user,
   	actions: req.query.actions
