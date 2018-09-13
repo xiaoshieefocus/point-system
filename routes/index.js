@@ -396,7 +396,6 @@ router.get('/individual?', function (req, res, next) {
 
                     percent[i].value = saved[i] * 100 / sum[i];
                 }
-                console.log(sum);
                 result.savedMoney = percent;
                 callback();
             });

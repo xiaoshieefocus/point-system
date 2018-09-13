@@ -68,7 +68,7 @@
                         Orders <%= user.order_num%> | Saved <%= user.saved_rate %>% | Points <%= user.user_points%>
                     </div>
                 </div>
-                <a class="view-detail" href="#">View Details</a>
+                <a class="view-detail" href="/index/?userId=<%= user.user_id %>&companyId=<%= company.id %>">View Details</a>
             </div>
         <%
             });

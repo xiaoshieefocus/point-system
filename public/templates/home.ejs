@@ -15,7 +15,7 @@
             <i class="fa fa-star" aria-hidden="true"></i>
             <i class="fa fa-star shawdow" aria-hidden="true"></i>
         </p>
-        <p class="user_company">Engneer in
+        <p class="user_company">Engineer in
             <a href="/company?companyId=<%= company.id%>">
                 <%= company.name%>
             </a>
@@ -29,7 +29,7 @@
     <div class="right-part">
         <div class="head-title">Discount</div>
         <div class="head-value">
-            <%= discount || 0%>%
+            <%= discount * 100 || 0%>%
         </div>
     </div>
     <div class="right-part">
