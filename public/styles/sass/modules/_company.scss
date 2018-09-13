@@ -79,6 +79,15 @@ body.point-system {
         }
     }
 
+    >.charts {
+        height: 410px;
+        background-color: #ffffff;
+
+        #line-chart {
+            width: 700px;
+            height: 300px;
+        }
+    }
 
     >.info {
         margin-top: 18px;
