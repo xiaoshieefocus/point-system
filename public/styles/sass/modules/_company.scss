@@ -65,6 +65,9 @@ body.point-system {
             color: #2F3A42;
             font-weight: bold;
             margin-right: 48px;
+            &:focus, &:hover{
+                outline: none;
+            }
 
             &.active {
                 border-bottom: 2px solid #31A1C2;
