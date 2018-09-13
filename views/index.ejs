@@ -5,9 +5,15 @@
 	<link rel='stylesheet' href='/styles/style.css' />
 	<link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap-grid.min.css" rel="stylesheet">
 	<link href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<script>
+        window.FC = {};
+        FC.historySpent = <%-JSON.stringify(historySpent) %>;
+        FC.historySaved = <%-JSON.stringify(historySaved) %>;
+        FC.historyPoints = <%-JSON.stringify(historyPoints) %>;
+    </script>
   </head>
-  <body class="point-system point-home">
+  <body class="point-system point-home company-detail">
 		<%- include ../public/templates/home.ejs %>
-
+	<script src="/javascripts/company.js"></script>
   </body>
 </html>
