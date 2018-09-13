@@ -2,6 +2,7 @@
 </script>
 <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts-en.min.js"></script>
+<script src="https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>
 <div id="user" class="container header">
     <div>
         <img src="/images/avatar/avatar4.png" alt="" class="user-avatar-img">
@@ -68,7 +69,7 @@
             <div>
                 <p>You have <span>200</span> points to redeem!</p>
                 <div class="get_point">
-                    <a href="">Get the points now <i class="fa fa-arrow-right"></i></a>
+                    <a href="javascript:void(0)" onclick="showImg('/images/popup.png')">Get the points now <i class="fa fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -240,6 +241,7 @@ var option = {
         itemWidth: 12,
         itemHeight: 12,
         itemGap: 18,
+        selectedMode:false,
         orient: 'horizontal',
         textStyle: {
             fontSize: 12,
@@ -411,6 +413,7 @@ var option1 = {
         itemWidth: 12,
         itemHeight: 12,
         itemGap: 18,
+        selectedMode:false,
         orient: 'horizontal',
         textStyle: {
             fontSize: 12,
@@ -512,6 +515,20 @@ var option1 = {
 };
 
 chart1.setOption(option);
+function showImg(url){
+    var img = "<img src='" + url + "' style='width:490px;height:500px' />";  
+	layer.open({  
+	    type: 1,  
+	    shade: false,  
+	    title: false, //不显示标题  
+	    area:['490px','500px'],  
+	    //area: [img.width + 'px', img.height+'px'],  
+	    content: img, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响  
+	    cancel: function () {  
+	        //layer.msg('图片查看结束！', { time: 5000, icon: 6 });  
+	    }  
+	});  
+}
 var offsetHeight = $('#radar').height() / 2 + 16,
     top_length = '-' + offsetHeight + "px";
 $('.radar-logo').css('top', top_length).show();

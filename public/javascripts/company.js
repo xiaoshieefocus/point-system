@@ -88,6 +88,7 @@ function renderSpentCircleChart() {
         legend: {
             orient: 'vertical',
             x: 'right',
+            selectedMode:false,
             data: ['CNY orders', 'USD orders']
         },
         color: ['#AACEDC', '#31A1C2'],
@@ -143,6 +144,7 @@ function renderSavedCircleChart() {
         legend: {
             orient: 'vertical',
             x: 'right',
+            selectedMode:false,
             data: ['Coupond', 'Discount']
         },
         color: ['#C2E0C4', '#61C77E'],
@@ -197,6 +199,7 @@ function renderPointsCircleChart() {
         },
         legend: {
             orient: 'vertical',
+            selectedMode:false,
             x: 'right',
             data: ['Purchase', 'Upload BOM', 'Invite new user']
         },
