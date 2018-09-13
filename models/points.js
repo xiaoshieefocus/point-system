@@ -296,6 +296,9 @@ points.getCompanyUserPoints = function (condition, callback) {
         } else {
             date = moment().subtract(config.pointsActive, 'days').format("YYYY-MM-DD");
             params[0] = date;
+            endDate = new Date();
+            endDate = endDate.toLocaleString();
+            params[1] = endDate;
             db.executeQuery(q, params, function (err, activeResults) {
                 if (err) {
                     msg = 'get company active info failed';
