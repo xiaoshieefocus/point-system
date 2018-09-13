@@ -98,7 +98,7 @@ router.get('/', function (req, res, next) {
             pointsModel.getCompanyOrUserPoints({ companyId: companyId }, function (err, data) {
             	console.log(data.sum);
                 if (data.sum < config.discountLevel[0].points) {
-                    templateData.discount = config.discountLevel[0].discount;
+                    templateData.discount = 0;
                 } else {
                     config.discountLevel.forEach(function (item) {
                         if (data.sum > item.points) {
