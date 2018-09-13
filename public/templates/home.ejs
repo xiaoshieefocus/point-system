@@ -162,21 +162,21 @@ var option = {
 	        shape: 'circle',                    // 雷达图绘制类型，支持 'polygon'(多边形) 和 'circle'(圆)。[ default: 'polygon' ]
 	        axisLine: {                         // (圆内的几条直线)坐标轴轴线相关设置
 	            lineStyle: {
-	                color: '#fff',                   // 坐标轴线线的颜色。
+	                color: '#CDCDCD',                   // 坐标轴线线的颜色。
 	                width: 1,                      	 // 坐标轴线线宽。
 	                type: 'solid',                   // 坐标轴线线的类型。
 	            }
 	        },
 	        splitLine: {                        // (这里是指所有圆环)坐标轴在 grid 区域中的分隔线。
 	            lineStyle: {
-	                color: '#fff',                       // 分隔线颜色
-	                width: 2, 							 // 分隔线线宽
+	                color: '#CDCDCD',                       // 分隔线颜色
+	                width: 1, 							 // 分隔线线宽
 	            }
 	        },
 	        splitArea: {                        // 坐标轴在 grid 区域中的分隔区域，默认不显示。
 	            show: true,
 	            areaStyle: {                            // 分隔区域的样式设置。
-	                color: ['rgba(250,250,250,0.3)','rgba(200,200,200,0.3)'],       // 分隔区域颜色。分隔区域会按数组中颜色的顺序依次循环设置颜色。默认是一个深浅的间隔色。
+	                color: ['#fff','#fff'],       // 分隔区域颜色。分隔区域会按数组中颜色的顺序依次循环设置颜色。默认是一个深浅的间隔色。
 	            }
 	        },
 	        indicator: [{               // 雷达图的指示器，用来指定雷达图中的多个变量（维度）,跟data中 value 对应
@@ -206,7 +206,7 @@ var option = {
 	        itemStyle: {                // 折线拐点标志的样式。
 	            normal: {                   // 普通状态时的样式
 	                lineStyle: {
-	                    width: 1
+	                    width: 3
 	                },
 	                opacity: 0.2
 	            },
@@ -217,29 +217,40 @@ var option = {
 	                opacity: 1
 	            }
 	        },
-	        data: [{                    // 雷达图的数据是多变量（维度）的
+	        data: [{
+	            name: 'Spent',
+	            value: [13408, 5065, 5947, 856, 302,400],
+	            symbol: 'circle',
+	            symbolSize: 5,
+	            areaStyle: {
+	                normal: {
+	                	opacity: 0.5,
+	                    color: '#e5e5e5'
+	                }
+	            }
+	        },{                    // 雷达图的数据是多变量（维度）的
 	            name: 'Saved',                 // 数据项名称
 	            value: [11035, 6013, 5067, 1520, 184,500],        // 其中的value项数组是具体的数据，每个值跟 radar.indicator 一一对应。
 	            symbol: 'circle',                   // 单个数据标记的图形。
 	            symbolSize: 5,                      // 单个数据标记的大小，可以设置成诸如 10 这样单一的数字，也可以用数组分开表示宽和高，例如 [20, 10] 表示标记宽为20，高为10。
-	            label: {                    // 单个拐点文本的样式设置                            
-	                    normal: {  
-	                        show: true,             // 单个拐点文本的样式设置。[ default: false ]
-	                        position: 'top',        // 标签的位置。[ default: top ]
-	                        distance: 5,            // 距离图形元素的距离。当 position 为字符描述值（如 'top'、'insideRight'）时候有效。[ default: 5 ]
-	                        color: 'rgba(255,0,0,1)',          // 文字的颜色。如果设置为 'auto'，则为视觉映射得到的颜色，如系列色。[ default: "#fff" ]
-	                        fontSize: 14,           // 文字的字体大小
-	                        formatter:function(params) {  
-	                            return params.value;  
-	                        }  
-	                    }  
-	                },
-	            itemStyle: {                // 单个拐点标志的样式设置。
-	                normal: {
-	                    borderColor: 'rgba(255,0,0,1)',       // 拐点的描边颜色。[ default: '#000' ]
-	                    borderWidth: 3,                        // 拐点的描边宽度，默认不描边。[ default: 0 ]
-	                }
-	            },
+	            // label: {                    // 单个拐点文本的样式设置                            
+	            //         normal: {  
+	            //             show: true,             // 单个拐点文本的样式设置。[ default: false ]
+	            //             position: 'top',        // 标签的位置。[ default: top ]
+	            //             distance: 5,            // 距离图形元素的距离。当 position 为字符描述值（如 'top'、'insideRight'）时候有效。[ default: 5 ]
+	            //             color: 'rgba(255,0,0,1)',          // 文字的颜色。如果设置为 'auto'，则为视觉映射得到的颜色，如系列色。[ default: "#fff" ]
+	            //             fontSize: 14,           // 文字的字体大小
+	            //             formatter:function(params) {  
+	            //                 return params.value;  
+	            //             }  
+	            //         }  
+	            //     },
+	            // itemStyle: {                // 单个拐点标志的样式设置。
+	            //     normal: {
+	            //         borderColor: '#61C77E',       // 拐点的描边颜色。[ default: '#000' ]
+	            //         borderWidth: 10,                        // 拐点的描边宽度，默认不描边。[ default: 0 ]
+	            //     }
+	            // },
 	            lineStyle: {                // 单项线条样式。
 	                normal: {
 	                    opacity: 0.5            // 图形透明度
@@ -247,40 +258,8 @@ var option = {
 	            },
 	            areaStyle: {                // 单项区域填充样式
 	                normal: {
-	                    color: 'rgba(255,0,0,0.6)'       // 填充的颜色。[ default: "#000" ]
-	                }
-	            }
-	        }, {
-	            name: 'Spent',
-	            value: [13408, 5065, 5947, 856, 302,400],
-	            symbol: 'circle',
-	            symbolSize: 5,
-	            label: {                        
-	                    normal: {  
-	                        show: true,
-	                        position: 'top',
-	                        distance: 5,
-	                        color: 'rgba(51,0,255,1)',
-	                        fontSize: 14,
-	                        formatter:function(params) {  
-	                            return params.value;  
-	                        }  
-	                    }  
-	                },
-	            itemStyle: {
-	                normal: {
-	                    borderColor: 'rgba(51,0,255,1)',
-	                    borderWidth: 3,
-	                }
-	            },
-	            lineStyle: {
-	                normal: {
-	                    opacity: 0.5
-	                }
-	            },
-	            areaStyle: {
-	                normal: {
-	                    color: 'rgba(51,0,255,0.5)'
+	                	opacity: 0.2,
+	                    color: '#61C77E'       // 填充的颜色。[ default: "#000" ]
 	                }
 	            }
 	        }]
