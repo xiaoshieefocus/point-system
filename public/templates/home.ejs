@@ -516,13 +516,13 @@ var option1 = {
 
 chart1.setOption(option);
 function showImg(url){
-    var img = "<img src='" + url + "' style='width:490px;height:500px' />";  
+    var img = "<img src='" + url + "' style='width:490px;height:536px' />";  
 	layer.open({  
 	    type: 1,  
 	    shade: false,  
 	    title: false, //不显示标题  
-	    area:['490px','500px'],  
-	    //area: [img.width + 'px', img.height+'px'],  
+	    //area:['480px','500px'],  
+	    area: [img.width + 'px', img.height+'px'],  
 	    content: img, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响  
 	    cancel: function () {  
 	        //layer.msg('图片查看结束！', { time: 5000, icon: 6 });  
