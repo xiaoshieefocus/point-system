@@ -29,7 +29,10 @@ router.get('/', function (req, res, next) {
             discount: 0,
             rank: 1,
             userRank: [],
-            company: ''
+            company: '',
+            historySpent: [],
+            historySaved: [],
+            historyPoints: []
         };
 
     if (!companyId || !userId) {
@@ -175,6 +178,33 @@ router.get('/', function (req, res, next) {
                 templateData.coupons = data;
                 callback();
             });
+        },
+        history: callback => {
+            pointsModel.getLogs({
+                month: 6,
+                companyId: companyId
+            }, function (err, companyLogs) {
+                var date = new Date(),
+                    month = 6;
+                companyLogs.forEach(function (monthData) {
+                    let spent = 0,
+                        saved = 0,
+                        points = 0,
+                        startDate = new Date();
+                    startDate.setMonth(date.getMonth() - month);
+                    startDate = startDate.toLocaleString().substring(0, 6);
+                    monthData.forEach(function (item) {
+                        spent += Number(item.change_points);
+                        saved += Number(item.saved_money);
+                        points += Number(item.change_points);
+                    });
+                    templateData.historySpent.push({ month: startDate, spent: spent });
+                    templateData.historySaved.push({ month: startDate, saved: (saved / spent).toFixed(4) * 100 });
+                    templateData.historyPoints.push({ month: startDate, points: points });
+                    month -= 1;
+                });
+            });
+            callback();
         }
     }, (err, data) => {
         templateData.title = 'my points';
