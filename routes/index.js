@@ -24,13 +24,20 @@ router.get('/', function (req, res, next) {
             coupons: '',
             discount: 0,
             rank: 1,
-            userRank: []
+            userRank: [],
+            companyName: ''
         };
 
     if (!companyId || !userId) {
         return res.send('miss userId or companyId');
     }
     async.parallel({
+    	companyName: callback =>{
+    		companiesModel.get(companyId, function(err,data){
+    			templateData.companyName = data.name;
+    			callback();
+    		})
+    	},
         rank: callback => {
             var MAX_INT = 9007199254740992;
             pointsModel.list({
@@ -55,6 +62,11 @@ router.get('/', function (req, res, next) {
                     return b.points - a.points;
                 })
                 templateData.userRank = rank;
+                for(var i = 0; i < rank.length; i++){
+                	if(userId == rank[i].user){
+		                templateData.rank += i;
+		        	}
+                }
                 callback();
             });
         },
@@ -132,7 +144,6 @@ router.get('/', function (req, res, next) {
 
                     percent[i].value = saved[i] * 100 / sum[i];
                 }
-                console.log(sum);
                 templateData.savedMoney = percent;
                 callback();
             });
