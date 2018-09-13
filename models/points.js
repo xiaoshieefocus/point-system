@@ -276,4 +276,25 @@ points.getCompanyOrUserPoints = function (condition, callback) {
 };
 
 
+points.getUserSaved = function (condition, callback) {
+
+    var params = [],
+        q = `SELECT * FROM point_logs`,
+        whereStr = ' WHERE ';
+        date = moment().subtract(condition.num, 'months').format("YYYY-MM-DD");
+        whereStr += ' created >= $1 AND change_points > $2 ';
+    params.push(date);
+    params.push(0);
+    if (condition.user) {
+        params.push(condition.user);
+        whereStr += ' AND user_id = $' + params.length;
+    }
+    if (condition.company) {
+        params.push(condition.company);
+        whereStr += ' AND company_id = $' + params.length;    
+    }
+    q += whereStr;
+    db.executeQuery(q, params, callback);
+};
+
 module.exports = points;
