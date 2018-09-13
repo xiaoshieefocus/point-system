@@ -6,6 +6,16 @@
 .container {
     width: 1190px;
     margin: 0 auto;
+
+    &.header,
+    &.info {
+        width: 1190px;
+        max-width: 1190px;
+    }
+    &.info {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 a {
