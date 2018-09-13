@@ -3,6 +3,7 @@ var express = require('express'),
     pointsModel = require('../models/points'),
     couponsModel = require('../models/coupons'),
     companiesModel = require('../models/companies'),
+    usersModel = require('../models/users'),
     pointsLogsBreakdownModel = require('../models/pointsLogsBreakdown'),
     config = require('../configs/global/config'),
     async = require('async'),
@@ -16,6 +17,7 @@ router.get('/', function (req, res, next) {
         companyId = req.query.companyId,
         month_num = req.query.num || '6',
         templateData = {
+            user: {},
             startMoth: moment().subtract(6, 'months').format("YYYY.MM"),
             endMoth: moment().format("YYYY.MM"),
             pointsThisMonth: '',
@@ -34,12 +36,18 @@ router.get('/', function (req, res, next) {
         return res.send('miss userId or companyId');
     }
     async.parallel({
-    	companyName: callback =>{
-    		companiesModel.get(companyId, function(err,data){
-    			templateData.company = data;
-    			callback();
-    		})
-    	},
+        user: callback => {
+            usersModel.get(userId, function (err, data) {
+                templateData.user = data;
+                callback();
+            })
+        },
+        companyName: callback => {
+            companiesModel.get(companyId, function (err, data) {
+                templateData.company = data;
+                callback();
+            })
+        },
         rank: callback => {
             var MAX_INT = 9007199254740992,
                 totalSaved = 0;
@@ -70,10 +78,10 @@ router.get('/', function (req, res, next) {
                     return b.points - a.points;
                 })
                 templateData.userRank = rank;
-                for(var i = 0; i < rank.length; i++){
-                	if(userId == rank[i].user){
-		                templateData.rank += i;
-		        	}
+                for (var i = 0; i < rank.length; i++) {
+                    if (userId == rank[i].user) {
+                        templateData.rank += i;
+                    }
                     if (totalSaved > 0) {
                         rank[i].savedP = Math.round(rank[i].saved / totalSaved * 10000) / 100;
                     } else {

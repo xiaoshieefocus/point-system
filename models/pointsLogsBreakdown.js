@@ -24,14 +24,17 @@ function changeTwoDecimal_f(x) {
 
 pointsLogsBreakdown.getDistributor = function (condition, callback) {
     var params = [],
+        date = moment().subtract(condition.num || '6', 'months').format("YYYY-MM") + '-01';
         q = '';
+
     if(condition.company){
-        q = `SELECT * FROM point_logs_breakdown WHERE company_id = $1` ;
+        q = `SELECT * FROM point_logs_breakdown WHERE company_id = $1 AND created > $2` ;
         params.push(condition.company);
     } else if(condition.user){
-        q = `SELECT * FROM point_logs_breakdown WHERE user_id = $1` ;
+        q = `SELECT * FROM point_logs_breakdown WHERE user_id = $1 AND created > $2` ;
         params.push(condition.user);
     }
+    params.push(date);
     db.executeQuery(q, params, function (err, data){
         var distributors = [],
             spend = [],

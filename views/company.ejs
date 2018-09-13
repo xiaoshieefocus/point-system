@@ -3,6 +3,14 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/styles/style.css' />
+    <script>
+        window.FC = {};
+        FC.historySpent = <%-JSON.stringify(historySpent) %>;
+        FC.historySaved = <%-JSON.stringify(historySaved) %>;
+        FC.historyPoints = <%-JSON.stringify(historyPoints) %>;
+    </script>
+    <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/echarts/4.1.0/echarts.min.js"></script>
   </head>
   <body class="point-system company-detail">
     <div class="container header">
@@ -29,11 +37,16 @@
     </div>
 
     <div class="container tabs">
-        <a class="tab-item" href="javascript:void(0);">Money spent</a>
-        <a class="tab-item active" href="javascript:void(0);">Money saved</a>
-        <a class="tab-item" href="javascript:void(0);">Points</a>
+        <a class="tab-item active" href="javascript:void(0);" data-chart="historySpent" data-value="spent">Money spent</a>
+        <a class="tab-item" href="javascript:void(0);" data-chart="historySaved" data-value="saved">Money saved</a>
+        <a class="tab-item" href="javascript:void(0);" data-chart="historyPoints" data-value="points">Points</a>
 
         <a class="export" href="javascript:void(0);">Export</a>
+    </div>
+
+     <div class="container charts">
+        <div id="line-chart" class="left-chart"></div>
+        <div id="circle-chart" class="right-chart"></div>
     </div>
     
     <div class="container info">
@@ -86,5 +99,7 @@
             
         </div>
     </div>
+
+    <script src="/javascripts/company.js"></script>
   </body>
 </html>

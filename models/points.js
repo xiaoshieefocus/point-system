@@ -54,7 +54,8 @@ points.list = function (condition, currentPage, pageSize, callback) {
     var params = [],
         q_count = `SELECT count(*) count FROM point_logs`,
         q = `SELECT * FROM point_logs`,
-        whereStr = " WHERE ",
+        whereStr = " WHERE created > $1 AND ",
+        date = moment().subtract(condition.num || '6', 'months').format("YYYY-MM") + '-01',
         sp = '',
         result = {
             pagination: {
@@ -65,7 +66,7 @@ points.list = function (condition, currentPage, pageSize, callback) {
             },
             data: []
         };
-
+    params.push(date);
     if (condition.id) {
         params.push(condition.id);
         whereStr += sp + "id = $" + params.length;
@@ -86,6 +87,7 @@ points.list = function (condition, currentPage, pageSize, callback) {
         whereStr += sp + "actions = $" + params.length;
         sp = " AND ";
     }
+
     if (whereStr != " WHERE ") {
         q_count += whereStr;
         q += whereStr;

@@ -79,6 +79,25 @@ body.point-system {
         }
     }
 
+    >.charts {
+        height: 410px;
+        background-color: #ffffff;
+        padding: 40px 24px;
+
+        @include clearfix;
+
+        #line-chart {
+            float: left;
+            width: 700px;
+            height: 350px;
+        }
+
+        #circle-chart {
+            float: right;
+            width: 400px;
+            height: 350px;
+        }
+    }
 
     >.info {
         margin-top: 18px;
