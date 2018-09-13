@@ -207,6 +207,9 @@ router.get('/', function (req, res, next) {
             callback();
         }
     }, (err, data) => {
+        if (!templateData.user) {
+            return res.send("no information of this user");
+        }
         templateData.title = 'my points';
         templateData.moment = moment;
         res.render('index', templateData);
@@ -227,6 +230,9 @@ router.get('/company', function (req, res, next) {
     companiesModel.get(companyId, function (err, company) {
         if (err) {
             res.json('get company failed');
+        }
+        if (!company) {
+            return res.send("no information of this company");
         }
         pointsModel.getCompanyUserPoints({
             companyId: companyId,
