@@ -1,248 +1,7 @@
 
-  <style>
-	/*common*/
-	body {
-		font: 14px PingFangSC-Regular;
-	}
-	a {
-		text-decoration: none;
-	}
-	body {
-  		padding: 50px;
-  		font-size: 14px;
-  		font-family: PingFangSC-Regular;
- 		background-color: #F8F8F8;
-	}	
-
-	#user, #echart, #other_info {
-		background-color: #fff;
-		width: 1190px;
-		margin: auto;
-	}
-
-	#user {
-		margin-bottom: 24px;
-		padding: 30px 24px;
-		height: 120px;
-		position: relative;
-	}
-
-	#echart {
-		margin-bottom: 18px;
-	}
-	
-	a {
-  		color: #00B7FF;
-	}
-  	/*user*/
-	#user img, #user div {
-		display: table-cell;
-		vertical-align: middle;
-	}
-	#user .info {
-		position: absolute;
-		top: 25%;
-		right: 0;
-	}
-	#user img {
-		height: 60px;
-		width: 60px;
-		margin-right: 24px;
-	}
-	#user p {
-		margin: 0;
-	}
-	#user p span {
-		font-size: 18px;
-		color: #2F3A42;
-		letter-spacing: 0;
-		line-height: 28px;
-	}
-	#user p.user_company {
-		font-size: 12px;
-		color: #212121;
-		letter-spacing: 0;
-		line-height: 18px;
-	}
-	#user ul {
-		list-style-type:none;
-		margin:0;
-		padding:0;
-	}
-	#user ul li {
-		float: left;
-		margin-right: 65px;
-	}
-	#user ul li p:nth-child(1){
-		font-size: 14px;
-		color: #212121;
-		letter-spacing: 0;
-		line-height: 22px;
-	}
-	#user ul li p:nth-child(2){
-		font-size: 24px;
-		color: #4A4A4A;
-		letter-spacing: 0;
-		line-height: 36px;
-	}
-	#user i::before {
-		color: #FF9F41; 
-	}
-	#user i.fa-star.shawdow::before {
-		color: #E0E0E1;
-	}
-</style>
-<style>
-	/*other_info*/
-	#other_info {
-		background-color: #F8F8F8;
-	}
-	#other_info .left, #other_info .right {
-		width: 49.3%;
-		background-color: #fff;
-		display: inline-block;
-	}
-	#other_info .left {
-		float: left;
-	}
-	#other_info .redeem_tip{
-		padding: 29px 24px;
-		height: 156px;
-        background: -webkit-linear-gradient(left, #E29074 , #DE696C);
-        background: -o-linear-gradient(right, #E29074, #DE696C); 
-        background: -moz-linear-gradient(right, #E29074, #DE696C); 
-        background: linear-gradient(to right, #E29074 , #DE696C); 	
-    }
-    #other_info .redeem_tip img {
-    	width: 96px;
-    	height: 98px;
-    	margin-right: 30px;
-    }
-    #other_info .redeem_tip p {
-    	margin: 0;
-    }
-    #other_info .redeem_tip p:nth-child(1){
-		color: #fff;
-		font-size: 24px;
-		letter-spacing: 0;
-		margin-bottom: 19px;
-    }
-    #other_info .redeem_tip .get_point{
-    	background: #FFFFFF;
-		border-radius: 18px;
-		height: 36px;
-		font-size: 14px;
-        padding: 0 18px;
-    }
-    #other_info .redeem_tip .get_point a{
-		color: #E37236;
-		font-size: 14px;
-		line-height: 22px;
-    }
-    #other_info .redeem_tip div{
-    	display: table-cell;
-		vertical-align: middle;
-    }
-    #radar {
-    	height: 495px;
-    	margin-top: 18px;
-    }
-
-    #other_info .right {
-		float: right;
-	}
-
-	#coupon {
-		padding: 24px;
-    	box-sizing: border-box;
-	}
-	#coupon .title{
-		font-family: PingFangSC-Semibold;
-	    font-size: 14px;
-	    color: #2F3A42;
-	    letter-spacing: 0;
-	    line-height: 22px;
-	    float: left;
-	    clear: left;
-	}
-	#coupon .content {
-	    width: 100%;
-	    height: 65px;
-	    float: left;
-	    clear: left;
-	    border-bottom: 1px dashed #DCDCDC;
-	    padding: 11px 24px 12px 24px;
-	    box-sizing: border-box;
-	}
-	#coupon .content.last {
-	    border-bottom: none;
-	}
-
-
-	#coupon .content img {
-	    float: left;
-	    clear: both;
-	    width: 42px;
-	    height: 42px;
-	    margin-right: 18px;
-
-	}
-
-	#coupon .content .userinfo {
-	    float: left;
-	    width: auto;
-	}
-
-	#coupon .content .rank {
-	    font-family: PingFangSC-Semibold;
-	    font-size: 12px;
-	    color: #E37236;
-	    letter-spacing: 0;
-	    line-height: 18px;
-	    float: left;
-	}
-
-	#coupon .content .username {
-	    font-family: PingFangSC-Regular;
-	    font-size: 12px;
-	    color: #212121;
-	    letter-spacing: 0;
-	    line-height: 18px;
-	    margin-left: 6px;
-	    float: left;
-	}
-
-	#coupon .content .secondline {
-	    font-family: PingFangSC-Regular;
-        font-size: 12px;
-        color: #666666;
-        letter-spacing: 0;
-        line-height: 18px;
-	    float: left;
-	    clear: left;
-	}
-
-	#coupon .content .action-btn {
-        display: block;
-        float: right;
-        font-family: PingFangSC-Regular;
-        font-size: 12px;
-        color: #E37236;
-        letter-spacing: 0;
-        text-align: center;
-        line-height: 26px;
-        width: 72px;
-        height: 26px;
-        background-image: linear-gradient(-180deg, #FEFEFE 0%, #F0F0F0 100%);
-        border: 1px solid rgba(47,58,66,0.30);
-        border-radius: 2px;
-        text-decoration:none;
-        margin-top: 8px;
-    }
-</style>
   <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-  <script src="//cdn.bootcss.com/echarts/4.1.0/echarts.simple.min.js"></script>
+  <script src="https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts-en.min.js"></script>
 	<div id="user">
 		<div>
 			<img src="/images/avatar/avatar4.png" alt="" class="personas">
@@ -295,8 +54,18 @@
 					</div>
 				</div>
 			</div>
-			<div id="radar">
-				
+			<div class="radar-container">
+				<div class="title">
+                	Saved in distributors
+                	<div class="time pull-right">2018.3 -2018.9</div>
+            	</div>
+				<ul>
+					<li>Me</li>
+					<li>Avg on bom2buy</li>
+				</ul>
+				<div id="radar">
+					
+				</div>
 			</div>
 		</div>
 		<div class="right">
@@ -332,3 +101,51 @@
 			</div>
 		</div>
 	</div>
+
+<script>
+	var chart1 = echarts.init(document.getElementById("radar"));
+	var option = {
+    title: {
+        text: '基础雷达图'
+    },
+    tooltip: {},
+    legend: {
+        data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）']
+    },
+    radar: {
+        // shape: 'circle',
+        name: {
+            textStyle: {
+                color: '#fff',
+                backgroundColor: '#999',
+                borderRadius: 3,
+                padding: [3, 5]
+           }
+        },
+        indicator: [
+           { name: '销售（sales）', max: 6500},
+           { name: '管理（Administration）', max: 16000},
+           { name: '信息技术（Information Techology）', max: 30000},
+           { name: '客服（Customer Support）', max: 38000},
+           { name: '研发（Development）', max: 52000},
+           { name: '市场（Marketing）', max: 25000}
+        ]
+    },
+    series: [{
+        name: '预算 vs 开销（Budget vs spending）',
+        type: 'radar',
+        // areaStyle: {normal: {}},
+        data : [
+            {
+                value : [4300, 10000, 28000, 35000, 50000, 19000],
+                name : '预算分配（Allocated Budget）'
+            },
+             {
+                value : [5000, 14000, 28000, 31000, 42000, 21000],
+                name : '实际开销（Actual Spending）'
+            }
+        ]
+    }]
+};
+				chart1.setOption(option);
+	</script>

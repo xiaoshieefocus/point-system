@@ -107,7 +107,9 @@ router.get('/individual?', function (req, res, next) {
     var result = {
     		pointsThisMonth: '',
     		pointsValid: '',
-    		distributors: ''
+    		distributors: '',
+    		savedMoney: '',
+    		distributorsForCompany: ''
     	};
     async.parallel({
     	pointsThisMonth : callback => {
@@ -130,7 +132,26 @@ router.get('/individual?', function (req, res, next) {
 		        result.distributors = data;
 		        callback();
 		    });
-    	}
+    	},
+    	distributorsForCompany : callback => {
+    		pointsLogsBreakdownModel.getDistributor({
+		        company: req.query.company
+		    }, function (err, data) {
+		        result.distributorsForCompany = data;
+		        callback();
+		    });
+    	},
+    	savedMoney : callback => {
+    		pointsModel.getUserSaved({
+    			num: req.query.num || '6',
+    			company: req.query.company,
+		        user: req.query.user
+		    }, function (err, data) {
+		        result.savedMoney = data;
+		        callback();
+		    });
+    	},
+    	
     }, (err, data) => {
 	    
 	    res.send(result);
