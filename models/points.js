@@ -210,6 +210,32 @@ points.getPointsTimes = function (condition, callback) {
     db.getObject(q, params, callback);
 };
 
+points.getLogs = function (condition, callback) {
+    var params = [],
+        q = `SELECT * FROM point_logs`,
+        whereStr = ' WHERE ',
+        date = new Date(),
+        searchDate;
+    if (condition.month) {
+        date.setMonth( date.getMonth() - condition.month);
+        date.setDate(1);
+    }
+    searchDate = date.toLocaleString().substring(0, 9);
+    whereStr += ' created >= $1 ';
+    params.push(searchDate);
+    if (condition.userId) {
+        params.push(condition.userId);
+        whereStr += ' AND user_id = $' + params.length;
+    }
+    if (condition.companyId) {
+        params.push(condition.companyId);
+        whereStr += ' AND company_id = $' + params.length;
+    }
+    q += whereStr;
+    q += ' ORDER BY created'
+    //console.log(q, params);
+    db.executeQuery(q, params, callback);
+};
 points.getCompanyUserPoints = function (condition, callback) {
 
     var params = [],

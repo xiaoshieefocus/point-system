@@ -53,16 +53,20 @@ router.get('/company', function (req, res, next) {
 			if (index > 0) {
 				discount = discountLevel[index].discount;
 			}
-			
-		  	res.render('company', {
-		  		company: company,
-		  		discount: discount,
-				companyPoints: companyPoints,
-				companyPast: pastResults,
-				companyActive: activeResults,
-				savedMoneyCompany: savedMoneyCompany,
-				title: 'company'
-		  	});
+			pointsModel.getLogs({
+				month: 6,
+				companyId: companyId
+			}, function (err, companyLogs) {
+				res.render('company', {
+			  		company: company,
+			  		discount: discount,
+					companyPoints: companyPoints,
+					companyPast: pastResults,
+					companyActive: activeResults,
+					savedMoneyCompany: savedMoneyCompany,
+					title: 'company'
+			  	});
+			});
 		});
 	});
 });
