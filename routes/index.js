@@ -252,7 +252,7 @@ router.get('/company', function (req, res, next) {
             });
             index = discountLevel.findIndex(item => companyPoints < item.points);
             if (index > 0) {
-                discount = discountLevel[index].discount;
+                discount = discountLevel[index - 1].discount;
             } else if (index === -1) {
             	discount = discountLevel[3].discount;
             }
