@@ -28,7 +28,7 @@ body.point-system {
                 line-height: 18px;
             }
         }
-
+discount-item
         .stars {
             float: left;
         }
@@ -175,6 +175,8 @@ body.point-system {
                 height: 36px;
                 line-height: 36px;
                 margin-bottom: 30px;
+                clear: left;
+                float: left;
 
                 &.last {
                     margin-bottom: 0;

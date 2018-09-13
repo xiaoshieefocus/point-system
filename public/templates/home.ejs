@@ -102,21 +102,14 @@
     </div>
     <div class="half pull-right">
         <div class="title">Points</div>
-        <div class="points-content">
-            <div class="points-title">
-                Points can be used
-            </div>
-            <div class="points-value green">
-                <%= pointsValid || 0%>
-            </div>
-        </div>
-        <div class="points-content">
-            <div class="points-title">
-                Points gained in this month
-            </div>
-            <div class="points-value">
+        <div class="discount-item last">
+            <img src="/images/points@2x.png">
+            <span class="amount">
                 <%= pointsThisMonth || 0%>
-            </div>
+            </span>
+            <span class="detail">
+                points gained in this month
+            </span>
         </div>
         <button class="points-btn">
             Redeem goods or coupons
@@ -163,13 +156,13 @@
 </div>
 <script>
 <%
-if (distributors) {
+if (distributors && distributors.length) {
     var indicator = [],
         saved = [],
         spend = [],
         savedTotal = 0,
-        spendTotal = 0,
-        max = 0;
+        spendTotal = 0;
+
     distributors.forEach(function (distributor, i) {
         var tmp = {
             name: distributor.distributor,
@@ -197,6 +190,19 @@ if (distributors) {
         saved.push(indicator[i].savedP);
         spend.push(indicator[i].spendP);
     });
+} else {
+    var indicator = [{
+        name: 'no data',
+            max: 100,
+            saved: 0,
+            spend: 0,
+            savedP: 0,
+            spendP: 0
+    }],
+    saved = [0],
+    spend = [0],
+    savedTotal = 0,
+    spendTotal = 0;
 }
 %>
 var chart1 = echarts.init(document.getElementById("radar"));
@@ -310,13 +316,12 @@ var option = {
     }, ]
 };
 <%
-if (distributorsForCompany) {
+if (distributorsForCompany && distributorsForCompany.length) {
     var indicator = [],
         saved = [],
         spend = [],
         savedTotal = 0,
-        spendTotal = 0,
-        max = 0;
+        spendTotal = 0;
     distributorsForCompany.forEach(function (distributor, i) {
         var tmp = {
             name: distributor.distributor,
@@ -342,6 +347,19 @@ if (distributorsForCompany) {
         saved.push(indicator[i].savedP);
         spend.push(indicator[i].spendP);
     });
+} else {
+    var indicator = [{
+        name: 'no data',
+            max: 100,
+            saved: 0,
+            spend: 0,
+            savedP: 0,
+            spendP: 0
+    }],
+    saved = [0],
+    spend = [0],
+    savedTotal = 0,
+    spendTotal = 0;
 }
 %>
 var option1 = {
