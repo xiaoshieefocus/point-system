@@ -1,6 +1,7 @@
 var express = require('express'),
     router = express(),
     pointsModel = require('../models/points'),
+    couponsModel = require('../models/coupons'),
     companiesModel = require('../models/companies'),
     pointsLogsBreakdownModel = require('../models/pointsLogsBreakdown'),
     config = require('../configs/global/config'),
@@ -131,7 +132,8 @@ router.get('/individual?', function (req, res, next) {
     		pointsValid: '',
     		distributors: '',
     		savedMoney: '',
-    		distributorsForCompany: ''
+    		distributorsForCompany: '',
+    		coupons: ''
     	};
     async.parallel({
     	pointsThisMonth : callback => {
@@ -197,6 +199,12 @@ router.get('/individual?', function (req, res, next) {
 		        callback();
 		    });
     	},
+    	coupons : callback => {
+    		couponsModel.list({user: req.query.user}, function(err, data){
+    			result.coupons = data;
+    			callback();
+    		});   		
+    	}
     	
     }, (err, data) => {
 	    
