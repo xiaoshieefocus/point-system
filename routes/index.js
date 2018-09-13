@@ -51,10 +51,14 @@ router.get('/', function (req, res, next) {
                             user.push(item.user_id);
                             rank.push({
                                 user: item.user_id,
+                                saved: parseInt(item.saved_money),
+                                orders: 1,
                                 points: parseInt(item.change_points)
                             });
                         } else {
                             rank[user.indexOf(item.user_id)].points += parseInt(item.change_points);
+                            rank[user.indexOf(item.user_id)].saved += parseInt(item.saved_money);
+                            rank[user.indexOf(item.user_id)].orders += 1;
                         }
                     }
                 })
