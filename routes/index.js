@@ -115,18 +115,6 @@ router.post('/actions', function (req, res, next) {
 });
 
 
-//points/list?company=1&user=170&actions=purchase&page=1&pagesize=100
-router.get('/points/list?', function (req, res, next) {
-    pointsModel.list({
-        companyId: req.query.company,
-        userId: req.query.user,
-        actions: req.query.actions
-    }, req.query.page || '1', req.query.pagesize || '10', function (err, data) {
-        res.send(data);
-    });
-});
-
-
 //individual?user=1&company=2&num=4
 router.get('/individual?', function (req, res, next) {
     var result = {
@@ -136,9 +124,37 @@ router.get('/individual?', function (req, res, next) {
     		savedMoney: '',
     		distributorsForCompany: '',
     		discount: '',
-    		coupons: ''
+    		coupons: '',
+    		rank: ''
     	};
     async.parallel({
+    	rank : callback => {
+    		 var MAX_INT = 9007199254740992;
+    		 pointsModel.list({
+			        companyId: req.query.company,
+			    }, 0, MAX_INT, function (err, data) {
+			    	var user = [],
+			    		rank = [];
+			    	data.data.forEach(function(item){
+			    		if(item.change_points > 0){
+			    			if(user.indexOf(item.user_id) < 0){
+			    				user.push(item.user_id);
+			    				rank.push({
+			    					user: item.user_id,
+			    					points: parseInt(item.change_points)
+			    				});
+			    			} else {
+			    				rank[user.indexOf(item.user_id)].points += parseInt(item.change_points);
+			    			}
+			    		}
+			    	})
+			    	rank.sort(function(a,b){
+			    		return b.points - a.points;
+			    	})
+			    	result.rank = rank;
+			        callback();
+		    });
+    	},
     	pointsThisMonth : callback => {
     		pointsModel.getCompanyOrUserPoints({userId: req.query.user}, function (err, data) {
 	        	result.pointsThisMonth = data.sum;
