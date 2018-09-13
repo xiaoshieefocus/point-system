@@ -83,7 +83,7 @@
             <div class="content<% if (i === coupons.length - 1) { %> last<%}%>">
                 <img src="/images/coupon@2x.png">
                 <div class="userinfo">
-                    <span class="username"><%= coupon.distributor || 'ALL'%>：Get <%= coupon.discount || '0'%>% off on order over $<%= coupon.min_price%></span>
+                    <span class="username"><%= coupon.distributor || 'ALL'%>：Get <%= coupon.discount || '0'%>% off on order over ￥<%= coupon.min_price%></span>
                     <span class="secondline">
                     <%= moment(coupon.start_date).format('YYYY.MM.DD')%> - <%= moment(coupon.end_date).format('YYYY.MM.DD')%>
                 </span>
@@ -267,7 +267,7 @@ var option = {
         startAngle: 90,
         name: {
             formatter: function (value, indicator) {
-                var str = value + '\nSpent $' + indicator.spend + '\nSaved ' + indicator.savedP + '%';
+                var str = value + '\nSpent ￥' + indicator.spend + '\nSaved ' + indicator.savedP + '%';
                 return str;
             },
             textStyle: {
@@ -439,7 +439,7 @@ var option1 = {
         startAngle: 90,
         name: {
             formatter: function (value, indicator) {
-                var str = value + '\nSpent $' + indicator.spend + '\nSaved ' + indicator.savedP + '%';
+                var str = value + '\nSpent ￥' + indicator.spend + '\nSaved ' + indicator.savedP + '%';
                 return str;
             },
             textStyle: {
@@ -543,4 +543,17 @@ $(".radar-container").on('click', function (e) {
         chart1.setOption(option1);
     }
 })
+</script>
+<script>
+<%
+var points = 0;
+historyPoints.forEach(function (point) {
+    points += parseInt(point.points);
+});
+%>
+    FC = FC || {};
+    FC.points = '<%= points || 0%>';
+    FC.PurchasePoints = '<%= points * 0.6 || 0%>';
+    FC.bomPoints = '<%= points * 0.3 || 0%>';
+    FC.invitePoints = '<%= points * 0.1 || 0%>';
 </script>
