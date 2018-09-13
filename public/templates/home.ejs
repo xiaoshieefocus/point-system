@@ -15,7 +15,7 @@
             <i class="fa fa-star" aria-hidden="true"></i>
             <i class="fa fa-star shawdow" aria-hidden="true"></i>
         </p>
-        <p class="user_company">Engneer in <a href="javascript:void(0) ">xxx company</a></p>
+        <p class="user_company">Engneer in <a href="/company?companyId=<%= company.id%>"><%= company.name%></a></p>
     </div>
     <div class="right-part">
         <div class="head-title">Rank</div>
@@ -94,7 +94,7 @@
                 Points can be used
             </div>
             <div class="points-value green">
-                1000
+                <%= pointsValid || 0%>
             </div>
         </div>
         <div class="points-content">
@@ -102,7 +102,7 @@
                 Points gained in this month
             </div>
             <div class="points-value">
-                300
+                <%= pointsThisMonth || 0%>
             </div>
         </div>
         <button class="points-btn">
@@ -115,10 +115,10 @@
             <div class="time pull-right"><%= startMoth%> - <%= endMoth%></div>
         </div>
         <div class="rank-info first">
-            You are ranked <span class="rank-info-rank"><%= rank || '-'%>th</span> in <span class="blue">xxxx xxx  xxx  xxxxxx company</span>
+            You are ranked <span class="rank-info-rank"><%= rank || '-'%>th</span> in <span class="blue"><%= company.name%></span>
         </div>
         <div class="rank-info">
-            Top 3 in xxxx xxx  xxx  xxxxxx company
+            Top 3 in <%= company.name%>
         </div>
         <%
         if (userRank && userRank.length) {
@@ -131,10 +131,10 @@
                 <span class="rank"><%= i+1%>th</span>
                 <span class="username"><%= user.username || 'User' + user.user%></span>
                 <div class="secondline">
-                    Orders <%= user.order_num%> | Saved <%= user.saved_money%> | Points <%= user.user_points%>
+                    Orders <%= user.orders%> | Saved <%= user.savedP%>% | Points <%= user.points%>
                 </div>
             </div>
-            <a class="view-detail" href="#">View Details</a>
+            <a class="view-detail" href="?userId=<%= user.user %>&companyId=<%= company.id%>">View Details</a>
         </div>
         <%
             });
