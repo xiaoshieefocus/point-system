@@ -135,12 +135,29 @@ router.get('/individual?', function (req, res, next) {
     		distributors: '',
     		savedMoney: '',
     		distributorsForCompany: '',
+    		discount: '',
     		coupons: ''
     	};
     async.parallel({
     	pointsThisMonth : callback => {
     		pointsModel.getCompanyOrUserPoints({userId: req.query.user}, function (err, data) {
 	        	result.pointsThisMonth = data.sum;
+	        	callback();
+	    	})
+    	},
+    	discount : callback => {
+    		pointsModel.getCompanyOrUserPoints({companyId: req.query.company}, function (err, data) {
+	        	if(data.sum < config.discountLevel[0].points){
+	        		result.discount = config.discountLevel[0].discount;
+	        	} else {
+	        		config.discountLevel.forEach(function(item){
+	        			if(data.sum > item.points){
+	        				result.discount = item.discount;
+	        			}
+	        		})
+	        		
+	    		}
+	        	
 	        	callback();
 	    	})
     	},
