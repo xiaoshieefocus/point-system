@@ -2,7 +2,7 @@ var lineChart = echarts.init(document.getElementById('line-chart'));
 var circleChart = echarts.init(document.getElementById('circle-chart'));
 
 renderLineChart(FC.historySpent, 'spent');
-renderCircleChart();
+renderSpentCircleChart();
 
 function renderLineChart(data, valueName) {
     var dateList = data.map(function(item) {
@@ -14,15 +14,6 @@ function renderLineChart(data, valueName) {
     });
 
     var option = {
-
-        // Make gradient line here
-        visualMap: [{
-            show: false,
-            type: 'continuous',
-            seriesIndex: 0,
-            min: 0,
-            max: 400
-        }],
         title: [{
             left: 'left',
             text: valueName + ' in order'
@@ -54,7 +45,7 @@ function renderLineChart(data, valueName) {
     lineChart.setOption(option);
 }
 
-function renderCircleChart() {
+function renderSpentCircleChart() {
 
     var option = {
         tooltip: {
@@ -64,7 +55,7 @@ function renderCircleChart() {
         legend: {
             orient: 'vertical',
             x: 'right',
-            data: ['Coupond', 'Discount']
+            data: ['CNY orders', 'USD orders']
         },
         color: ['#AACEDC', '#31A1C2'],
         series: [
@@ -92,8 +83,8 @@ function renderCircleChart() {
                     }
                 },
                 data: [
-                    { value: 40, name: 'Coupond' },
-                    { value: 60, name: 'Discount' }]
+                    { value: 40, name: 'USD orders' },
+                    { value: 60, name: 'CNY orders' }]
             }
         ]
     };
@@ -102,6 +93,102 @@ function renderCircleChart() {
 
 }
 
+function renderSavedCircleChart() {
+
+    var option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'right',
+            data: ['Coupond', 'Discount']
+        },
+        color: ['#C2E0C4', '#61C77E'],
+        series: [
+            {
+                name: '',
+                type: 'pie',
+                radius: ['65%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: [
+                    { value: 60, name: 'Coupond' },
+                    { value: 40, name: 'Discount' }]
+            }
+        ]
+    };
+
+    circleChart.setOption(option);
+
+}
+
+function renderPointsCircleChart() {
+
+    var option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'right',
+            data: ['Purchase', 'Upload BOM', 'Invite new user']
+        },
+        color: ['#E7C2C5','#D79096', '#C44747'],
+        series: [
+            {
+                name: '',
+                type: 'pie',
+                radius: ['65%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: [
+                    { value: 15, name: 'Invite new user' },
+                    { value: 25, name: 'Upload BOM' },
+                    { value: 60, name: 'Purchase' }]
+            }
+        ]
+    };
+
+    circleChart.setOption(option);
+
+}
 
 $(function() {
     $('.tab-item').on('click', function (e) {
@@ -113,7 +200,14 @@ $(function() {
         var fieldName = $(this).data('chart');
         var valueName = $(this).data('value');
         renderLineChart(FC[fieldName], valueName);
-        renderCircleChart();
+
+        if (valueName === 'points') {
+            renderPointsCircleChart();
+        } else if (valueName === 'saved') {
+            renderSavedCircleChart();
+        } else {
+            renderSpentCircleChart();
+        }
 
         $('.tab-item').removeClass('active');
         $(this).addClass('active');
