@@ -41,7 +41,8 @@ router.get('/', function (req, res, next) {
     		})
     	},
         rank: callback => {
-            var MAX_INT = 9007199254740992;
+            var MAX_INT = 9007199254740992,
+                totalSaved = 0;
             pointsModel.list({
                 companyId: companyId,
             }, 0, MAX_INT, function (err, data) {
@@ -53,15 +54,16 @@ router.get('/', function (req, res, next) {
                             user.push(item.user_id);
                             rank.push({
                                 user: item.user_id,
-                                saved: parseInt(item.saved_money),
+                                saved: parseFloat(item.saved_money),
                                 orders: 1,
                                 points: parseInt(item.change_points)
                             });
                         } else {
                             rank[user.indexOf(item.user_id)].points += parseInt(item.change_points);
-                            rank[user.indexOf(item.user_id)].saved += parseInt(item.saved_money);
+                            rank[user.indexOf(item.user_id)].saved += parseFloat(item.saved_money);
                             rank[user.indexOf(item.user_id)].orders += 1;
                         }
+                        totalSaved += parseFloat(item.saved_money);
                     }
                 })
                 rank.sort(function (a, b) {
@@ -72,6 +74,11 @@ router.get('/', function (req, res, next) {
                 	if(userId == rank[i].user){
 		                templateData.rank += i;
 		        	}
+                    if (totalSaved > 0) {
+                        rank[i].savedP = Math.round(rank[i].saved / totalSaved * 10000) / 100;
+                    } else {
+                        rank[i].savedP = 0;
+                    }
                 }
                 callback();
             });
@@ -241,7 +248,7 @@ router.get('/company', function (req, res, next) {
                     companyPoints: companyPoints,
                     companyPast: pastResults,
                     companyActive: activeResults,
-                    savedMoneyCompany: savedMoneyCompany,
+                    savedMoneyCompany: savedMoneyCompany.toFixed(2),
                     title: 'company'
                 });
             });

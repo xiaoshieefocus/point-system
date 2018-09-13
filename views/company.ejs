@@ -13,7 +13,7 @@
         </div>
 
         <div class="stars">
-            <% for(var i=0; i<5; i++) { %>
+            <% for(var i = 0; i < 5; i++) { %>
                 <span class="star <% if (i>3) {%>active <%}%>"></span>
             <% } %>
         </div>
@@ -24,7 +24,7 @@
         </div>
         <div class="right-part">
             <div class="head-title">Discount</div>
-            <div class="head-value"><%= discount%>%</div>
+            <div class="head-value"><%= discount * 100 %>%</div>
         </div>
     </div>
 
@@ -67,10 +67,10 @@
             <div class="discount-item">
                 <img src="/images/discount@2x.png">
                 <span class="amount">
-                    <%= discount%>% off
+                    <%= discount * 100 %>% off
                 </span>
                 <span class="detail">
-                    on thr order over $<%= savedMoneyCompany%>
+                    on thr order over ¥<%= savedMoneyCompany%>
                 </span>
             </div>
             <div class="title">Points</div>

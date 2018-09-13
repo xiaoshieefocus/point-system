@@ -34,13 +34,17 @@ pointsLogsBreakdown.getDistributor = function (condition, callback) {
     }
     db.executeQuery(q, params, function (err, data){
         var distributors = [],
+            spend = [],
             purchase_money_saved = [];
         data.forEach(function(item){
             if(distributors.indexOf(item.distributor_name) < 0){
                 distributors.push(item.distributor_name);
                 purchase_money_saved.push(parseFloat(item.purchase_money_saved));
+                spend.push(parseFloat(item.change_points_distributor));
             } else {
                 purchase_money_saved[distributors.indexOf(item.distributor_name)] += parseFloat(item.purchase_money_saved);
+                spend[distributors.indexOf(item.distributor_name)] += parseFloat(item.change_points_distributor);
+
             }
 
         });
@@ -48,7 +52,8 @@ pointsLogsBreakdown.getDistributor = function (condition, callback) {
         for (var i = 0; i < purchase_money_saved.length; i++){
             var item = {
                 distributor: distributors[i],
-                purchase_money_saved: changeTwoDecimal_f(purchase_money_saved[i])
+                purchase_money_saved: changeTwoDecimal_f(purchase_money_saved[i]),
+                spend: changeTwoDecimal_f(spend[i])
             }
             result.push(item);
         }
