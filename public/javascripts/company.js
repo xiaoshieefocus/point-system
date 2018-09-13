@@ -16,7 +16,11 @@ function renderLineChart(data, valueName) {
     var option = {
         title: [{
             left: 'left',
-            text: valueName + ' in order'
+            text: valueName + ' in order',
+            textStyle: {
+                fontSize: 14,
+                color: '#2F3A42'
+            }
         }],
         tooltip: {
             trigger: 'axis'
@@ -25,7 +29,22 @@ function renderLineChart(data, valueName) {
             data: dateList
         }],
         yAxis: [{
-            splitLine: { show: false }
+            splitLine: { show: false },
+            axisLabel:{
+                formatter:function(value, index){
+                    var value_formatter = '';
+                    if(valueName=='spent'){
+                        value_formatter = '¥ ' +value;
+                    }
+                    else if(valueName=='saved'){
+                        value_formatter = value + '%';
+                    }
+                    else{
+                        value_formatter = value;
+                    }  
+                    return value_formatter;
+                }
+            }
         }],
         series: [{
             type: 'line',
