@@ -241,7 +241,7 @@ router.get('/company', function (req, res, next) {
                     companyPoints: companyPoints,
                     companyPast: pastResults,
                     companyActive: activeResults,
-                    savedMoneyCompany: savedMoneyCompany,
+                    savedMoneyCompany: savedMoneyCompany.toFixed(2),
                     title: 'company'
                 });
             });
