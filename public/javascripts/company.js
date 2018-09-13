@@ -48,6 +48,20 @@ function renderLineChart(data, valueName) {
 function renderSpentCircleChart() {
 
     var option = {
+        title: {
+            left: 'center',
+            top:'40%',
+            text: '￥30,000.00',
+            textStyle: {
+                fontSize: 30,
+                color: '#2F3A42'
+            },
+            subtext: 'spent in total\n2018.3 - 2018.9',
+            subtextStyle:{
+                fontSize: 14,
+                color: '#4A4A4A'
+            }
+        },
         tooltip: {
             trigger: 'item',
             formatter: "{b}: {c} ({d}%)"
@@ -96,6 +110,20 @@ function renderSpentCircleChart() {
 function renderSavedCircleChart() {
 
     var option = {
+        title: {
+            left: 'center',
+            top:'40%',
+            text: '￥3,000.00',
+            textStyle: {
+                fontSize: 30,
+                color: '#2F3A42'
+            },
+            subtext: 'saved in total\n2018.3 - 2018.9',
+            subtextStyle:{
+                fontSize: 14,
+                color: '#4A4A4A'
+            }
+        },
         tooltip: {
             trigger: 'item',
             formatter: "{b}: {c} ({d}%)"
@@ -144,6 +172,20 @@ function renderSavedCircleChart() {
 function renderPointsCircleChart() {
 
     var option = {
+        title: {
+            left: 'center',
+            top:'40%',
+            text: '1,300',
+            textStyle: {
+                fontSize: 30,
+                color: '#2F3A42'
+            },
+            subtext: 'active points',
+            subtextStyle:{
+                fontSize: 14,
+                color: '#4A4A4A'
+            }
+        },
         tooltip: {
             trigger: 'item',
             formatter: "{b}: {c} ({d}%)"
