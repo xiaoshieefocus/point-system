@@ -16,6 +16,8 @@ router.get('/', function (req, res, next) {
         companyId = req.query.companyId,
         month_num = req.query.num || '6',
         templateData = {
+            startMoth: moment().subtract(6, 'months').format("YYYY.MM"),
+            endMoth: moment().format("YYYY.MM"),
             pointsThisMonth: '',
             pointsValid: '',
             distributors: '',
@@ -25,7 +27,7 @@ router.get('/', function (req, res, next) {
             discount: 0,
             rank: 1,
             userRank: [],
-            companyName: ''
+            company: ''
         };
 
     if (!companyId || !userId) {
@@ -34,7 +36,7 @@ router.get('/', function (req, res, next) {
     async.parallel({
     	companyName: callback =>{
     		companiesModel.get(companyId, function(err,data){
-    			templateData.companyName = data.name;
+    			templateData.company = data;
     			callback();
     		})
     	},
@@ -156,6 +158,7 @@ router.get('/', function (req, res, next) {
         }
     }, (err, data) => {
         templateData.title = 'my points';
+        templateData.moment = moment;
         res.render('index', templateData);
     });
 });
