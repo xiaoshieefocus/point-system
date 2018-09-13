@@ -173,7 +173,9 @@ if (distributors && distributors.length) {
         saved = [],
         spend = [],
         savedTotal = 0,
-        spendTotal = 0;
+        spendTotal = 0,
+        maxP = 0,
+        maxSpend = 0;
 
     distributors.forEach(function (distributor, i) {
         var tmp = {
@@ -198,9 +200,18 @@ if (distributors && distributors.length) {
         } else {
             indicator[i].spendP = 0;
         }
-
         saved.push(indicator[i].savedP);
         spend.push(indicator[i].spendP);
+
+        if (maxP < indicator[i].savedP) {
+            maxP = indicator[i].savedP;
+        }
+        if (maxP < indicator[i].spendP) {
+            maxP = indicator[i].spendP;
+        }
+    });
+    indicator.forEach(function (item, i) {
+        indicator[i].max = maxP;
     });
 } else {
     var indicator = [{
@@ -212,9 +223,7 @@ if (distributors && distributors.length) {
             spendP: 0
     }],
     saved = [0],
-    spend = [0],
-    savedTotal = 0,
-    spendTotal = 0;
+    spend = [0];
 }
 %>
 var chart1 = echarts.init(document.getElementById("radar"));
@@ -333,7 +342,8 @@ if (distributorsForCompany && distributorsForCompany.length) {
         saved = [],
         spend = [],
         savedTotal = 0,
-        spendTotal = 0;
+        spendTotal = 0,
+        maxP = 0;
     distributorsForCompany.forEach(function (distributor, i) {
         var tmp = {
             name: distributor.distributor,
@@ -358,6 +368,16 @@ if (distributorsForCompany && distributorsForCompany.length) {
         }
         saved.push(indicator[i].savedP);
         spend.push(indicator[i].spendP);
+
+        if (maxP < indicator[i].savedP) {
+            maxP = indicator[i].savedP;
+        }
+        if (maxP < indicator[i].spendP) {
+            maxP = indicator[i].spendP;
+        }
+    });
+    indicator.forEach(function (item, i) {
+        indicator[i].max = maxP;
     });
 } else {
     var indicator = [{
@@ -369,9 +389,7 @@ if (distributorsForCompany && distributorsForCompany.length) {
             spendP: 0
     }],
     saved = [0],
-    spend = [0],
-    savedTotal = 0,
-    spendTotal = 0;
+    spend = [0];
 }
 %>
 var option1 = {
