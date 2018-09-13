@@ -179,12 +179,12 @@ var option = {
 	        startAngle: 90,                  
 	        name: {                             
 	            formatter:  function (value, indicator) {
-	            	var str = value + '\nSpent $'+'4,000'+'\nSaved '+'18%';
+	            	var str = value + '\nSpent $'+indicator.max+'\nSaved '+'18%';
     				return  str;
 				},
 	            textStyle: {
 	                fontSize: 12,
-	                color: '#212121'
+	                color: '#666'
 	            }
 	        },
 	        nameGap: 15,                  
@@ -257,7 +257,7 @@ var option = {
 	                    color: '#e5e5e5'
 	                }
 	            }
-	        },{                    
+	        },{
 	            name: 'Saved',               
 	            value: [11035, 6013, 5067, 1520, 184,500],       
 	            symbol: 'circle',                  
@@ -275,4 +275,10 @@ chart1.setOption(option);
 var offsetHeight = $('#radar').height()/2+16,
 	top_length = '-'+offsetHeight+"px";
 $('.radar-logo').css('top',top_length).show();
+$(".radar-container").on('click',function(e){
+	var event = window.event || e,
+	    target = event.srcElement || event.target;
+	$(target).parent('ul').find('li').removeClass('active');
+	$(target).addClass("active");
+})
 </script>
