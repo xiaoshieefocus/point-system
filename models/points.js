@@ -2,6 +2,7 @@ var db = require('../lib/db'),
     logger = require('../lib/logger').logger,
     moment = require('moment'),
     config = require('../configs/global/config'),
+    async = require('async'),
     points = {};
 
 points.create = function (tbl, data, callback) {
@@ -211,30 +212,53 @@ points.getPointsTimes = function (condition, callback) {
 };
 
 points.getLogs = function (condition, callback) {
-    var params = [],
-        q = `SELECT * FROM point_logs`,
-        whereStr = ' WHERE ',
-        date = new Date(),
-        searchDate;
-    if (condition.month) {
-        date.setMonth( date.getMonth() - condition.month);
-        date.setDate(1);
+    var asyncs = [],
+        month = condition.month,
+        date = new Date();
+        
+    while (month && month >= 0) {
+        var startDate = new Date(),
+            endDate = new Date();
+
+        q = `SELECT * FROM point_logs`;
+        whereStr = ' WHERE ';
+        let params = [];
+        startDate.setMonth(date.getMonth() - month);
+        if (month > 0) {
+            endDate.setMonth(date.getMonth() - month + 1);
+            endDate.setDate(1);
+        } else {
+            endDate = date;
+        }
+        startDate.setDate(1);
+        
+        startDate = startDate.toLocaleString().substring(0,9);
+        endDate = endDate.toLocaleString().substring(0,9);
+        whereStr += ' created >= $1 AND created <= $2';
+        params.push(startDate);
+        params.push(endDate);
+        if (condition.userId) {
+            params.push(condition.userId);
+            whereStr += ' AND user_id = $' + params.length;
+        }
+        if (condition.companyId) {
+            params.push(condition.companyId);
+            whereStr += ' AND company_id = $' + params.length;
+        }
+        q += whereStr;
+        q += ' ORDER BY created';
+        month -= 1;
+        asyncs.push(function(done) {
+            db.executeQuery(q, params, done);
+        });
     }
-    searchDate = date.toLocaleString().substring(0, 9);
-    whereStr += ' created >= $1 ';
-    params.push(searchDate);
-    if (condition.userId) {
-        params.push(condition.userId);
-        whereStr += ' AND user_id = $' + params.length;
-    }
-    if (condition.companyId) {
-        params.push(condition.companyId);
-        whereStr += ' AND company_id = $' + params.length;
-    }
-    q += whereStr;
-    q += ' ORDER BY created'
-    //console.log(q, params);
-    db.executeQuery(q, params, callback);
+    async.parallel(asyncs, function (err, data) {
+        if (err) {
+            callback(true, '');
+        }
+        callback(null, data);
+    });
+    
 };
 points.getCompanyUserPoints = function (condition, callback) {
 
