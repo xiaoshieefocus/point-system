@@ -109,17 +109,51 @@ body.point-home {
         }
     }
     .radar-container {
-        padding: 24px;
         .title {
             font-size: 14px;
             color: #2f3a42;
             line-height: 22px;
             font-weight: bold;
             margin-bottom: 12px;
+            float: initial!important;
             .time {
                 font-size: 12px;
                 color: #666666;
                 line-height: 18px;
+            }
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            top: -500px;
+            position: relative;
+            z-index: 9999;
+            li {
+                float: left;
+                border: 1px solid rgba(47,58,66,0.30);
+                border-radius: 2px 0 0 2px;
+                font-size: 12px;
+                color: #31a1c2;
+                letter-spacing: 0;
+                text-align: center;
+                line-height: 18px;
+                padding: 6px 18px;
+                background-color: #f5f5f5;
+                &.active {
+                    background: #ecf6f9;
+                    border: 1px solid #31a1c2;
+                }
+                &:nth-child(1) {
+                    &.active ~ li {
+                        border-left: none;
+                    }
+                }
+                &:nth-child(2) {
+                    &.active ~ li {
+                        border-right: none;
+                    }
+                }
             }
         }
         #radar {
