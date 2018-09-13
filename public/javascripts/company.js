@@ -83,13 +83,6 @@ function renderSpentCircleChart() {
                         show: false,
                         position: 'center'
                     },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '30',
-                            fontWeight: 'bold'
-                        }
-                    }
                 },
                 labelLine: {
                     normal: {
@@ -145,13 +138,6 @@ function renderSavedCircleChart() {
                         show: false,
                         position: 'center'
                     },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '30',
-                            fontWeight: 'bold'
-                        }
-                    }
                 },
                 labelLine: {
                     normal: {
@@ -207,13 +193,6 @@ function renderPointsCircleChart() {
                         show: false,
                         position: 'center'
                     },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '30',
-                            fontWeight: 'bold'
-                        }
-                    }
                 },
                 labelLine: {
                     normal: {
