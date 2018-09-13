@@ -202,7 +202,7 @@ router.get('/company', function (req, res, next) {
                 savedMoneyCompany += Number(item.saved_money);
             });
             pastResults.forEach(function (item) {
-                item.saved_rate = ((item.saved_money / savedMoneyCompany).toFixed(4)) * 100;
+                item.saved_rate = ((item.saved_money / savedMoneyCompany) * 100).toFixed(2);
             });
             pastResults.sort(function (a, b) {
                 if (a.user_points * 1 >= b.user_points * 1) return -1;
