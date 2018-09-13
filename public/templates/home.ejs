@@ -61,7 +61,7 @@
             <div class="userinfo">
                 <span class="username"><%= coupon.distributor || 'ALL'%>：Get <%= coupon.discount || '0'%>% off on order over $<%= coupon.min_price%></span>
                 <span class="secondline">
-                    2018.10.1 - 2018.10.7
+                    <%= moment(coupon.start_date).format('YYYY.MM.DD')%> - <%= moment(coupon.end_date).format('YYYY.MM.DD')%>
                 </span>
             </div>
             <a class="action-btn" href="#">Use it</a>
@@ -75,7 +75,7 @@
         <div class="radar-container">
             <div class="title">
                 Saved in distributors
-                <div class="time pull-right">2018.3 -2018.9</div>
+                <div class="time pull-right"><%= startMoth%> - <%= endMoth%></div>
             </div>
             <div id="radar">
             </div>
@@ -110,58 +110,34 @@
     <div class="half pull-right rank">
         <div class="title">
             Rank
-            <div class="time pull-right">2018.3 -2018.9</div>
+            <div class="time pull-right"><%= startMoth%> - <%= endMoth%></div>
         </div>
         <div class="rank-info first">
-            You are ranked <span class="rank-info-rank">4th</span> in <span class="blue">xxxx xxx  xxx  xxxxxx company</span>
+            You are ranked <span class="rank-info-rank"><%= rank || '-'%>th</span> in <span class="blue">xxxx xxx  xxx  xxxxxx company</span>
         </div>
         <div class="rank-info">
             Top 3 in xxxx xxx  xxx  xxxxxx company
         </div>
-        <div class="rank-item first">
-            <img src="/images/avatar/avatar5.png">
+        <%
+        if (userRank && userRank.length) {
+            userRank = userRank.slice(0, 3);
+            userRank.forEach(function (user, i) {
+        %>
+        <div class="rank-item <% if (i===0) { %>first<%}%>">
+            <img  src="/images/avatar/avatar<%= (user.user * 1 % 6 + 1)%>.png">
             <div class="userinfo">
-                <span class="rank">7th</span>
-                <span class="username">User100</span>
+                <span class="rank"><%= i+1%>th</span>
+                <span class="username"><%= user.username || 'User' + user.user%></span>
                 <div class="secondline">
-                    Orders 1 | Saved 8.73 | Points 291
+                    Orders <%= user.order_num%> | Saved <%= user.saved_money%> | Points <%= user.user_points%>
                 </div>
             </div>
             <a class="view-detail" href="#">View Details</a>
         </div>
-        <div class="rank-item ">
-            <img src="/images/avatar/avatar5.png">
-            <div class="userinfo">
-                <span class="rank">8th</span>
-                <span class="username">User10</span>
-                <div class="secondline">
-                    Orders 2 | Saved 41.7 | Points 1390
-                </div>
-            </div>
-            <a class="view-detail" href="#">View Details</a>
-        </div>
-        <div class="rank-item ">
-            <img src="/images/avatar/avatar5.png">
-            <div class="userinfo">
-                <span class="rank">9th</span>
-                <span class="username">User130</span>
-                <div class="secondline">
-                    Orders 1 | Saved 27.51 | Points 917
-                </div>
-            </div>
-            <a class="view-detail" href="#">View Details</a>
-        </div>
-        <div class="rank-item ">
-            <img src="/images/avatar/avatar3.png">
-            <div class="userinfo">
-                <span class="rank">10th</span>
-                <span class="username">User80</span>
-                <div class="secondline">
-                    Orders 1 | Saved 10.89 | Points 363
-                </div>
-            </div>
-            <a class="view-detail" href="#">View Details</a>
-        </div>
+        <%
+            });
+        }
+        %>
     </div>
 </div>
 <script>
