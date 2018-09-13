@@ -20,6 +20,9 @@ router.get('/', function (req, res, next) {
 
 router.get('/company', function (req, res, next) {
 	var companyId = req.query.companyId,
+		historySpent = [],
+		historySaved = [],
+		historyPoints = [],
 		discountLevel = config.discountLevel,
 		companyPoints = 0,
 		index = -1,
@@ -32,7 +35,7 @@ router.get('/company', function (req, res, next) {
 		}
 		pointsModel.getCompanyUserPoints({
 		  	companyId: companyId,
-		  	date: 180
+		  	month: 6
 		}, function (err, userData) {
 			var pastResults = userData.pastResults,
 				activeResults = userData.activeResults;
@@ -58,7 +61,25 @@ router.get('/company', function (req, res, next) {
 				month: 6,
 				companyId: companyId
 			}, function (err, companyLogs) {
+				companyLogs.forEach(function (monthData) {
+					let spent = 0,
+						saved = 0,
+						points = 0;
+					monthData.forEach(function (item) {
+						spent += Number(item.change_points);
+						saved += Number(item.saved_money);
+						points += Number(item.change_points);
+					});
+					historySpent.push(spent);
+					historySaved.push((saved / spent).toFixed(4) * 100);
+					historySaved.push(saved);
+					historyPoints.push(points);
+				});
+				
 				res.render('company', {
+					historySpent: historySpent,
+					historySaved: historySaved,
+					historyPoints: historyPoints,
 			  		company: company,
 			  		discount: discount,
 					companyPoints: companyPoints,

@@ -230,8 +230,7 @@ points.getLogs = function (condition, callback) {
         } else {
             endDate = date;
         }
-        startDate.setDate(1);
-        
+        startDate.setDate(1);       
         startDate = startDate.toLocaleString().substring(0,9);
         endDate = endDate.toLocaleString().substring(0,9);
         whereStr += ' created >= $1 AND created <= $2';
@@ -245,6 +244,7 @@ points.getLogs = function (condition, callback) {
             params.push(condition.companyId);
             whereStr += ' AND company_id = $' + params.length;
         }
+        whereStr += " AND actions = 'purchase'";
         q += whereStr;
         q += ' ORDER BY created';
         month -= 1;
@@ -265,10 +265,19 @@ points.getCompanyUserPoints = function (condition, callback) {
     var params = [],
         q = `SELECT SUM(change_points) AS user_points, user_id, SUM(saved_money) AS saved_money, SUM(CASE WHEN actions = 'purchase' THEN 1 ELSE 0 END) AS order_num FROM point_logs`,
         whereStr = ' WHERE ',
-        date = moment().subtract(condition.date, 'days').format("YYYY-MM-DD");
+        month = condition.month,
+        date = new Date(),
+        startDate = new Date(),
+        endDate = new Date();
 
-    whereStr += ' created >= $1 AND change_points > $2 ';
-    params.push(date);
+    startDate.setMonth(date.getMonth() - month);
+    startDate.setDate(1);
+    endDate.setDate(1);
+    startDate = startDate.toLocaleString().substring(0,9);
+    endDate = endDate.toLocaleString().substring(0,9);
+    whereStr += ' created >= $1 AND created <= $2 AND change_points > $3 ';
+    params.push(startDate);
+    params.push(endDate);
     params.push(0);
     if (condition.userId) {
         params.push(condition.userId);
