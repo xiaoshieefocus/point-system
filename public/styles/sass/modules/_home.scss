@@ -132,9 +132,18 @@ body.point-home {
     }
 
 
-    #coupon {
-        padding: 24px;
-        box-sizing: border-box;
+    .half {
+        margin-top: 18px;
+
+        &.first {
+            margin-top: 0;
+        }
+        &.nopadding {
+            padding-top: 0;
+            padding-right: 0;
+            padding-bottom: 0;
+            padding-left: 0;
+        }
         .title {
             font-family: PingFangSC-Semibold;
             font-size: 14px;
