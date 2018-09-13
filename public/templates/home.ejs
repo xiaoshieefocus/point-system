@@ -82,7 +82,7 @@
             <div class="content<% if (i === coupons.length - 1) { %> last<%}%>">
                 <img src="/images/coupon@2x.png">
                 <div class="userinfo">
-                    <span class="username"><%= coupon.distributor || 'ALL'%>：Get <%= coupon.discount || '0'%>% off on order over $<%= coupon.min_price%></span>
+                    <span class="username"><%= coupon.distributor || 'ALL'%>：Get <%= coupon.discount || '0'%>% off on order over ￥<%= coupon.min_price%></span>
                     <span class="secondline">
                     <%= moment(coupon.start_date).format('YYYY.MM.DD')%> - <%= moment(coupon.end_date).format('YYYY.MM.DD')%>
                 </span>
@@ -265,7 +265,7 @@ var option = {
         startAngle: 90,
         name: {
             formatter: function (value, indicator) {
-                var str = value + '\nSpent $' + indicator.spend + '\nSaved ' + indicator.savedP + '%';
+                var str = value + '\nSpent ￥' + indicator.spend + '\nSaved ' + indicator.savedP + '%';
                 return str;
             },
             textStyle: {
@@ -436,7 +436,7 @@ var option1 = {
         startAngle: 90,
         name: {
             formatter: function (value, indicator) {
-                var str = value + '\nSpent $' + indicator.spend + '\nSaved ' + indicator.savedP + '%';
+                var str = value + '\nSpent ￥' + indicator.spend + '\nSaved ' + indicator.savedP + '%';
                 return str;
             },
             textStyle: {
