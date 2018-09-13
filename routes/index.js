@@ -5,6 +5,7 @@ var express = require('express'),
     pointsLogsBreakdownModel = require('../models/pointsLogsBreakdown'),
     config = require('../configs/global/config'),
     async = require('async'),
+    moment = require('moment'),
     pointsHelper = require('../lib/helpers/points');
 
 /* GET home page. */
@@ -96,13 +97,8 @@ router.get('/points/list?', function (req, res, next) {
     });
 });
 
-//points/sumexpire?user=170
-router.get('/points/sumexpire?', function (req, res, next) {
-    pointsModel.getPointsForUserId(req.query.user, function (err, data) {
-        res.send(data);
-    });
-});
 
+//individual?user=1&company=2&num=4
 router.get('/individual?', function (req, res, next) {
     var result = {
     		pointsThisMonth: '',
@@ -147,7 +143,31 @@ router.get('/individual?', function (req, res, next) {
     			company: req.query.company,
 		        user: req.query.user
 		    }, function (err, data) {
-		        result.savedMoney = data;
+		    	var month = moment().format("MM"),
+		    		saved = [],
+		    		sum = [],
+		    		percent = [],
+		    		num = req.query.num || '6';
+		    	for(var i = 0; i < num; i++){
+		    		saved.push(0);
+		    		sum.push(0);
+		    		percent.push({
+		    			month: ((month - i + 12) % 12),
+		    			value: 0,
+		    		});
+		    	}
+		    	data.forEach(function(item){
+		    		var index = (month - moment(item.created).format("MM"));
+		    		index = index < 0 ? (index + 12) : index;
+		    		saved[index] += parseInt(item.saved_money);
+		    		sum[index] += parseInt(item.change_points);
+		    	})
+		    	for(var i = 0; i < num; i++){
+		    		
+		    		percent[i].value = saved[i] * 100 / sum[i];
+		    	}
+		    	console.log(sum);
+		        result.savedMoney = percent;
 		        callback();
 		    });
     	},

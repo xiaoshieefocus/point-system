@@ -308,9 +308,10 @@ points.getUserSaved = function (condition, callback) {
         q = `SELECT * FROM point_logs`,
         whereStr = ' WHERE ';
         date = moment().subtract(condition.num, 'months').format("YYYY-MM-DD");
-        whereStr += ' created >= $1 AND change_points > $2 ';
+        whereStr += ' created >= $1 AND change_points > $2 AND actions = $3';
     params.push(date);
     params.push(0);
+    params.push('purchase');
     if (condition.user) {
         params.push(condition.user);
         whereStr += ' AND user_id = $' + params.length;
