@@ -23,7 +23,8 @@ router.get('/', function (req, res, next) {
             distributorsForCompany: '',
             coupons: '',
             discount: 0,
-            rank: 1
+            rank: 1,
+            userRank: []
         };
 
     if (!companyId || !userId) {
@@ -53,18 +54,18 @@ router.get('/', function (req, res, next) {
                 rank.sort(function (a, b) {
                     return b.points - a.points;
                 })
-                result.rank = rank;
+                templateData.userRank = rank;
                 callback();
             });
         },
         discount: callback => {
             pointsModel.getCompanyOrUserPoints({ companyId: companyId }, function (err, data) {
                 if (data.sum < config.discountLevel[0].points) {
-                    result.discount = config.discountLevel[0].discount;
+                    templateData.discount = config.discountLevel[0].discount;
                 } else {
                     config.discountLevel.forEach(function (item) {
                         if (data.sum > item.points) {
-                            result.discount = item.discount;
+                            templateData.discount = item.discount;
                         }
                     })
 
