@@ -177,6 +177,9 @@ if (distributors && distributors.length) {
         maxP = 0,
         maxSpend = 0;
 
+    distributors = distributors.sort(function (a, b) {
+        return parseFloat(a.purchase_money_saved) - parseFloat(b.purchase_money_saved);
+    });
     distributors.forEach(function (distributor, i) {
         var tmp = {
             name: distributor.distributor,
@@ -344,6 +347,11 @@ if (distributorsForCompany && distributorsForCompany.length) {
         savedTotal = 0,
         spendTotal = 0,
         maxP = 0;
+
+    distributorsForCompany = distributorsForCompany.sort(function (a, b) {
+        return parseFloat(a.purchase_money_saved) - parseFloat(b.purchase_money_saved);
+    });
+
     distributorsForCompany.forEach(function (distributor, i) {
         var tmp = {
             name: distributor.distributor,
