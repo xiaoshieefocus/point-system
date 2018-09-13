@@ -233,7 +233,7 @@ points.getLogs = function (condition, callback) {
         startDate.setDate(1);       
         startDate = startDate.toLocaleString().substring(0,9);
         endDate = endDate.toLocaleString().substring(0,9);
-        whereStr += ' created >= $1 AND created <= $2';
+        whereStr += ' created >= $1 AND created <= $2 ';
         params.push(startDate);
         params.push(endDate);
         if (condition.userId) {

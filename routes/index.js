@@ -61,19 +61,24 @@ router.get('/company', function (req, res, next) {
 				month: 6,
 				companyId: companyId
 			}, function (err, companyLogs) {
+				var date = new Date(),
+					month = 6;
 				companyLogs.forEach(function (monthData) {
 					let spent = 0,
 						saved = 0,
-						points = 0;
+						points = 0,
+						startDate = new Date();
+					startDate.setMonth(date.getMonth() - month);
+					startDate = startDate.toLocaleString().substring(0,6);
 					monthData.forEach(function (item) {
 						spent += Number(item.change_points);
 						saved += Number(item.saved_money);
 						points += Number(item.change_points);
 					});
-					historySpent.push(spent);
-					historySaved.push((saved / spent).toFixed(4) * 100);
-					historySaved.push(saved);
-					historyPoints.push(points);
+					historySpent.push({month: startDate,spent: spent});
+					historySaved.push({month: startDate, saved: (saved / spent).toFixed(4) * 100});
+					historyPoints.push({month: startDate, points: points});
+					month -= 1;
 				});
 				
 				res.render('company', {
