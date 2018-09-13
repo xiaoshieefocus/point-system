@@ -116,6 +116,9 @@ body.point-system {
                 line-height: 22px;
                 font-weight: bold;
                 margin-bottom: 12px;
+                float: left;
+                clear: left;
+                width: 100%;
             }
 
             .time {
@@ -129,6 +132,7 @@ body.point-system {
                 height: 65px;
                 border-top: 1px dashed #DCDCDC;
                 padding: 11px 0 12px;
+                float: left;
 
                 &.first {
                     border-top: 0;
