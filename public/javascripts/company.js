@@ -1,14 +1,16 @@
 var lineChart = echarts.init(document.getElementById('line-chart'));
+var circleChart = echarts.init(document.getElementById('circle-chart'));
 
-renderSpentLineChart();
+renderLineChart(FC.historySpent, 'spent');
+renderCircleChart();
 
-function renderSpentLineChart() {
-    var dateList = FC.historySpent.map(function(item) {
+function renderLineChart(data, valueName) {
+    var dateList = data.map(function(item) {
         return item.month;
     });
 
-    var valueList = FC.historySpent.map(function (item) {
-        return item.spent;
+    var valueList = data.map(function (item) {
+        return item[valueName];
     });
 
     var option = {
@@ -21,11 +23,9 @@ function renderSpentLineChart() {
             min: 0,
             max: 400
         }],
-
-
         title: [{
-            left: 'center',
-            text: 'Gradient along the y axis'
+            left: 'left',
+            text: valueName + ' in order'
         }],
         tooltip: {
             trigger: 'axis'
@@ -39,9 +39,83 @@ function renderSpentLineChart() {
         series: [{
             type: 'line',
             showSymbol: false,
-            data: valueList
+            data: valueList,
+            itemStyle: {
+                normal: {
+                    lineStyle: {
+                        width: 5,
+                        color: "#31A1C2"
+                    }
+                }
+            },
         }]
     };
 
     lineChart.setOption(option);
 }
+
+function renderCircleChart() {
+
+    var option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'right',
+            data: ['Coupond', 'Discount']
+        },
+        color: ['#AACEDC', '#31A1C2'],
+        series: [
+            {
+                name: '',
+                type: 'pie',
+                radius: ['65%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: [
+                    { value: 40, name: 'Coupond' },
+                    { value: 60, name: 'Discount' }]
+            }
+        ]
+    };
+
+    circleChart.setOption(option);
+
+}
+
+
+$(function() {
+    $('.tab-item').on('click', function (e) {
+        e.preventDefault();
+        if ($(this).hasClass('active')) {
+            return;
+        }
+
+        var fieldName = $(this).data('chart');
+        var valueName = $(this).data('value');
+        renderLineChart(FC[fieldName], valueName);
+        renderCircleChart();
+
+        $('.tab-item').removeClass('active');
+        $(this).addClass('active');
+    });
+});
