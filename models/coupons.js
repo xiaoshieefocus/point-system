@@ -48,63 +48,21 @@ coupons.get = function (id, callback) {
     var q = `SELECT * FROM coupons WHERE id = $1`;
     db.getObject(q, [id], callback);
 };
-coupons.list = function (condition, pageIndex, pagesize, callback) {
+coupons.list = function (condition,  callback) {
     var params = [],
-        q_count = `SELECT count(*) count FROM coupons`,
         q = `SELECT * FROM coupons`,
-        whereStr = " WHERE ",
-        sp = '',
-        result = {
-            pagination: {
-                currentPage: currentPage,
-                pageSize: pageSize,
-                pages: 0,
-                count: 0
-            },
-            data: []
-        };
-
-    if (condition.id) {
-        params.push(condition.startDate);
-        whereStr += sp + "id = $" + params.length;
+        whereStr = " WHERE end_date > $1 AND status = $2 AND ",
+        sp = '';
+        params.push(moment().format("YYYY-MM-DD"));
+        params.push('active');
+    if (condition.user) {
+        params.push(condition.user);
+        whereStr += sp + "user_id = $" + params.length;
         sp = " AND ";
     }
-
-    if (whereStr != " WHERE ") {
-        q_count += whereStr;
-        q += whereStr;
-    }
-
-    db.getObject(q_count, params, function (err, countRs) {
-        if (err) {
-            callback(err);
-        } else {
-            if (countRs && countRs.count) {
-                q += " ORDER BY id DESC";
-                if (pageSize) {
-                    params.push(pageSize);
-                    q += " LIMIT $" + params.length;
-                }
-
-                if (currentPage) {
-                    params.push((currentPage - 1) * pageSize);
-                    q += " OFFSET $" + params.length;
-                }
-                result.pagination.count = countRs.count;
-                result.pagination.pages = Math.ceil(countRs.count / pageSize);
-                db.executeQuery(q, params, function (err, qRs) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        result.data = qRs;
-                        callback(null, result);
-                    }
-                });
-            } else {
-                callback(null, result);
-            }
-        }
-    });
+    q += whereStr;
+    db.executeQuery(q, params, callback);
+                   
 };
 
 coupons.getCouponToSeller = function (coupon_points) {
