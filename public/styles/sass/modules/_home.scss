@@ -126,7 +126,7 @@ body.point-home {
             list-style-type: none;
             margin: 0;
             padding: 0;
-            top: -500px;
+            top: -455px;
             position: relative;
             z-index: 9999;
             li {
@@ -157,8 +157,19 @@ body.point-home {
             }
         }
         #radar {
-            height: 495px;
+            height: 449px;
             margin-top: 18px;
+        }
+        .radar-logo {
+            width: 33px;
+            height: 33px; 
+            background-image: url(/images/avatar/avatar4.png);
+            background-size: 33px;
+            border-radius: 50%;
+            position: relative;
+            z-index: 9999;
+            left: 47%;
+            display: none;
         }
     }
     .right {

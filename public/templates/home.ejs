@@ -15,7 +15,7 @@
             <i class="fa fa-star" aria-hidden="true"></i>
             <i class="fa fa-star shawdow" aria-hidden="true"></i>
         </p>
-        <p class="user_company">Engneer in <a href="javascript:void(0) ">xxx company</a></p>
+        <p class="user_company">Engneer in <a href="/company?companyId=<%= company.id%>"><%= company.name%></a></p>
     </div>
     <div class="right-part">
         <div class="head-title">Rank</div>
@@ -83,6 +83,8 @@
                 <li class="active">Me</li>
                 <li>Avg on bom2buy</li>
             </ul>
+            <div class="radar-logo"></div>
+            
         </div>
     </div>
     <div class="half pull-right">
@@ -92,7 +94,7 @@
                 Points can be used
             </div>
             <div class="points-value green">
-                1000
+                <%= pointsValid || 0%>
             </div>
         </div>
         <div class="points-content">
@@ -100,7 +102,7 @@
                 Points gained in this month
             </div>
             <div class="points-value">
-                300
+                <%= pointsThisMonth || 0%>
             </div>
         </div>
         <button class="points-btn">
@@ -113,10 +115,10 @@
             <div class="time pull-right"><%= startMoth%> - <%= endMoth%></div>
         </div>
         <div class="rank-info first">
-            You are ranked <span class="rank-info-rank"><%= rank || '-'%>th</span> in <span class="blue">xxxx xxx  xxx  xxxxxx company</span>
+            You are ranked <span class="rank-info-rank"><%= rank || '-'%>th</span> in <span class="blue"><%= company.name%></span>
         </div>
         <div class="rank-info">
-            Top 3 in xxxx xxx  xxx  xxxxxx company
+            Top 3 in <%= company.name%>
         </div>
         <%
         if (userRank && userRank.length) {
@@ -129,10 +131,10 @@
                 <span class="rank"><%= i+1%>th</span>
                 <span class="username"><%= user.username || 'User' + user.user%></span>
                 <div class="secondline">
-                    Orders <%= user.order_num%> | Saved <%= user.saved_money%> | Points <%= user.user_points%>
+                    Orders <%= user.orders%> | Saved <%= user.savedP%>% | Points <%= user.points%>
                 </div>
             </div>
-            <a class="view-detail" href="#">View Details</a>
+            <a class="view-detail" href="?userId=<%= user.user %>&companyId=<%= company.id%>">View Details</a>
         </div>
         <%
             });
@@ -143,23 +145,24 @@
 <script>
 var chart1 = echarts.init(document.getElementById("radar"));
 var option = {
-	    legend: {                        // 图例组件
+	    color: ["#2F3A42",'#61C77E'],
+	    legend: {                      
 	        show: true,         
-	        icon: 'rect',                   // 图例项的 icon。ECharts 提供的标记类型包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow'也可以通过 'image://url' 设置为图片，其中 url 为图片的链接，或者 dataURI。可以通过 'path://' 将图标设置为任意的矢量路径。         
-	        top : '-1%',                    // 图例距离顶部边距
-	        right : '-1%',                   // 图例距离左侧边距
-	        itemWidth: 12,                  // 图例标记的图形宽度。[ default: 25 ]
-	        itemHeight: 12,                 // 图例标记的图形高度。[ default: 14 ]
-	        itemGap: 18,                	// 图例每项之间的间隔。[ default: 10 ]横向布局时为水平间隔，纵向布局时为纵向间隔。
-	        orient: 'horizontal',             // 图例列表的布局朝向,'horizontal'为横向,''为纵向.
-	        textStyle: {                    // 图例的公用文本样式。
+	        icon: 'rect',                  
+	        top : '-1%',                    
+	        right : '-1%',                  
+	        itemWidth: 12,                  
+	        itemHeight: 12,                 
+	        itemGap: 18,                	
+	        orient: 'horizontal',             
+	        textStyle: {                    
 	            fontSize: 12,
 	            color: '#fff'
 	        },
-	        data: [{                    // 图例的数据数组。数组项通常为一个字符串，每一项代表一个系列的 name（如果是饼图，也可以是饼图单个数据的 name）。图例组件会自动根据对应系列的图形标记（symbol）来绘制自己的颜色和标记，特殊字符串 ''（空字符串）或者 '\n'（换行字符串）用于图例的换行。
-	            name: 'Spent',                 // 图例项的名称，应等于某系列的name值（如果是饼图，也可以是饼图单个数据的 name）。                    
+	        data: [{
+	            name: 'Spent',                    
 	            icon:'image://./images/Rectangle-spent.png',
-	            textStyle: {                // 图例项的文本样式。
+	            textStyle: {
 	                color: 'rgba(33,33,33)',
 	            }
 	        },{
@@ -170,44 +173,45 @@ var option = {
 	            }
 	        }],
 	    },
-	    
-	    radar: [{                       // 雷达图坐标系组件，只适用于雷达图。
-	        center: ['50%', '50%'],             // 圆中心坐标，数组的第一项是横坐标，第二项是纵坐标。[ default: ['50%', '50%'] ]
-	        radius: 160,                        // 圆的半径，数组的第一项是内半径，第二项是外半径。
-	        startAngle: 90,                     // 坐标系起始角度，也就是第一个指示器轴的角度。[ default: 90 ]
-	        name: {                             // (圆外的标签)雷达图每个指示器名称的配置项。
-	            formatter: '{value}',
+	    radar: [{                      
+	        center: ['50%', '50%'],     
+	        radius: 85,                      
+	        startAngle: 90,                  
+	        name: {                             
+	            formatter:  function (value, indicator) {
+	            	var str = value + '\nSpent $'+'4,000'+'\nSaved '+'18%';
+    				return  str;
+				},
 	            textStyle: {
 	                fontSize: 12,
 	                color: '#212121'
 	            }
 	        },
-	        nameGap: 15,                        // 指示器名称和指示器轴的距离。[ default: 15 ]
-	        splitNumber: 4,                     // (这里是圆的环数)指示器轴的分割段数。[ default: 5 ]
-	        shape: 'circle',                    // 雷达图绘制类型，支持 'polygon'(多边形) 和 'circle'(圆)。[ default: 'polygon' ]
-	        axisLine: {                         // (圆内的几条直线)坐标轴轴线相关设置
+	        nameGap: 15,                  
+	        splitNumber: 5,                     
+	        shape: 'circle',                   
+	        axisLine: {                        
 	            lineStyle: {
-	                color: '#CDCDCD',                   // 坐标轴线线的颜色。
-	                width: 1,                      	 // 坐标轴线线宽。
-	                type: 'solid',                   // 坐标轴线线的类型。
+	                color: '#CDCDCD',                  
+	                width: 1,                      	
+	                type: 'solid',                  
 	            }
 	        },
-	        splitLine: {                        // (这里是指所有圆环)坐标轴在 grid 区域中的分隔线。
+	        splitLine: {                       
 	            lineStyle: {
-	                color: '#CDCDCD',                       // 分隔线颜色
-	                width: 1, 							 // 分隔线线宽
+	                color: '#CDCDCD',                     
+	                width: 1, 							
 	            }
 	        },
-	        splitArea: {                        // 坐标轴在 grid 区域中的分隔区域，默认不显示。
+	        splitArea: {                        
 	            show: true,
-	            areaStyle: {                            // 分隔区域的样式设置。
-	                color: ['#fff','#fff'],       // 分隔区域颜色。分隔区域会按数组中颜色的顺序依次循环设置颜色。默认是一个深浅的间隔色。
+	            areaStyle: {                            
+	                color: ['#fff','#fff'],     
 	            }
 	        },
-	        indicator: [{               // 雷达图的指示器，用来指定雷达图中的多个变量（维度）,跟data中 value 对应
-	            name: 'Arrow',                           // 指示器名称   
-	            max: 15000,                               // 指示器的最大值，可选，建议设置 
-	            //color: '#fff'                           // 标签特定的颜色。
+	        indicator: [{             
+	            name: 'Arrow',                             
+	            max: 15000,                             
 	        }, {
 	            name: 'Chip1Stop',
 	            max: 10000
@@ -226,20 +230,20 @@ var option = {
 	        }]
 	    }],
 	    series: [{
-	        name: '雷达图',             // 系列名称,用于tooltip的显示，legend 的图例筛选，在 setOption 更新数据和配置项时用于指定对应的系列。
-	        type: 'radar',              // 系列类型: 雷达图
-	        itemStyle: {                // 折线拐点标志的样式。
-	            normal: {                   // 普通状态时的样式
+	        name: '雷达图',            
+	        type: 'radar',            
+	        itemStyle: {               
+	            normal: {                  
 	                lineStyle: {
-	                    width: 3
+	                    width: 2
 	                },
 	                opacity: 0.2
 	            },
-	            emphasis: {                 // 高亮时的样式
+	            emphasis: { 
 	                lineStyle: {
-	                    width: 5
+	                    width: 3
 	                },
-	                opacity: 1
+	                opacity: 0.8
 	            }
 	        },
 	        data: [{
@@ -253,42 +257,22 @@ var option = {
 	                    color: '#e5e5e5'
 	                }
 	            }
-	        },{                    // 雷达图的数据是多变量（维度）的
-	            name: 'Saved',                 // 数据项名称
-	            value: [11035, 6013, 5067, 1520, 184,500],        // 其中的value项数组是具体的数据，每个值跟 radar.indicator 一一对应。
-	            symbol: 'circle',                   // 单个数据标记的图形。
-	            symbolSize: 5,                      // 单个数据标记的大小，可以设置成诸如 10 这样单一的数字，也可以用数组分开表示宽和高，例如 [20, 10] 表示标记宽为20，高为10。
-	            // label: {                    // 单个拐点文本的样式设置                            
-	            //         normal: {  
-	            //             show: true,             // 单个拐点文本的样式设置。[ default: false ]
-	            //             position: 'top',        // 标签的位置。[ default: top ]
-	            //             distance: 5,            // 距离图形元素的距离。当 position 为字符描述值（如 'top'、'insideRight'）时候有效。[ default: 5 ]
-	            //             color: 'rgba(255,0,0,1)',          // 文字的颜色。如果设置为 'auto'，则为视觉映射得到的颜色，如系列色。[ default: "#fff" ]
-	            //             fontSize: 14,           // 文字的字体大小
-	            //             formatter:function(params) {  
-	            //                 return params.value;  
-	            //             }  
-	            //         }  
-	            //     },
-	            // itemStyle: {                // 单个拐点标志的样式设置。
-	            //     normal: {
-	            //         borderColor: '#61C77E',       // 拐点的描边颜色。[ default: '#000' ]
-	            //         borderWidth: 10,                        // 拐点的描边宽度，默认不描边。[ default: 0 ]
-	            //     }
-	            // },
-	            lineStyle: {                // 单项线条样式。
-	                normal: {
-	                    opacity: 0.5            // 图形透明度
-	                }
-	            },
-	            areaStyle: {                // 单项区域填充样式
+	        },{                    
+	            name: 'Saved',               
+	            value: [11035, 6013, 5067, 1520, 184,500],       
+	            symbol: 'circle',                  
+	            symbolSize: 5,                     
+	            areaStyle: {               
 	                normal: {
 	                	opacity: 0.2,
-	                    color: '#61C77E'       // 填充的颜色。[ default: "#000" ]
+	                    color: '#61C77E'      
 	                }
 	            }
 	        }]
 	    }, ]
 	};
 chart1.setOption(option);
+var offsetHeight = $('#radar').height()/2+16,
+	top_length = '-'+offsetHeight+"px";
+$('.radar-logo').css('top',top_length).show();
 </script>
