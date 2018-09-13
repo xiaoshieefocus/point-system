@@ -96,7 +96,7 @@ router.get('/', function (req, res, next) {
         },
         discount: callback => {
             pointsModel.getCompanyOrUserPoints({ companyId: companyId }, function (err, data) {
-            	console.log(data.sum);
+                console.log(data.sum);
                 if (data.sum < config.discountLevel[0].points) {
                     templateData.discount = 0;
                 } else {
@@ -254,7 +254,7 @@ router.get('/company', function (req, res, next) {
             if (index > 0) {
                 discount = discountLevel[index - 1].discount;
             } else if (index === -1) {
-            	discount = discountLevel[3].discount;
+                discount = discountLevel[3].discount;
             }
             pointsModel.getLogs({
                 month: 6,

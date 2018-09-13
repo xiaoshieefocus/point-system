@@ -4,10 +4,20 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/styles/style.css' />
     <script>
+    <%
+    var points = 0;
+    historyPoints.forEach(function (point) {
+        points += parseInt(point.points);
+    });
+    %>
         window.FC = {};
         FC.historySpent = <%-JSON.stringify(historySpent) %>;
         FC.historySaved = <%-JSON.stringify(historySaved) %>;
         FC.historyPoints = <%-JSON.stringify(historyPoints) %>;
+        FC.points = '<%= companyPoints.toFixed(0) || 0%>';
+        FC.PurchasePoints = '<%= companyPoints.toFixed(0) * 0.6 || 0%>';
+        FC.bomPoints = '<%= companyPoints.toFixed(0) * 0.3 || 0%>';
+        FC.invitePoints = '<%= companyPoints.toFixed(0) * 0.1 || 0%>';
     </script>
     <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/echarts/4.1.0/echarts.min.js"></script>

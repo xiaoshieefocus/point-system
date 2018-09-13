@@ -109,8 +109,8 @@ function renderSpentCircleChart() {
                     }
                 },
                 data: [
-                    { value: 40, name: 'USD orders' },
-                    { value: 60, name: 'CNY orders' }]
+                    { value: 0, name: 'USD orders' },
+                    { value: 100, name: 'CNY orders' }]
             }
         ]
     };
@@ -180,7 +180,7 @@ function renderPointsCircleChart() {
         title: {
             left: 'center',
             top:'40%',
-            text: '1,300',
+            text: FC.points,
             textStyle: {
                 fontSize: 30,
                 color: '#2F3A42'
@@ -219,9 +219,9 @@ function renderPointsCircleChart() {
                     }
                 },
                 data: [
-                    { value: 15, name: 'Invite new user' },
-                    { value: 25, name: 'Upload BOM' },
-                    { value: 60, name: 'Purchase' }]
+                    { value: FC.invitePoints, name: 'Invite new user' },
+                    { value: FC.bomPoints, name: 'Upload BOM' },
+                    { value: FC.PurchasePoints, name: 'Purchase' }]
             }
         ]
     };

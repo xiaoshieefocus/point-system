@@ -527,3 +527,16 @@ $(".radar-container").on('click', function (e) {
     }
 })
 </script>
+<script>
+<%
+var points = 0;
+historyPoints.forEach(function (point) {
+    points += parseInt(point.points);
+});
+%>
+    FC = FC || {};
+    FC.points = '<%= points || 0%>';
+    FC.PurchasePoints = '<%= points * 0.6 || 0%>';
+    FC.bomPoints = '<%= points * 0.3 || 0%>';
+    FC.invitePoints = '<%= points * 0.1 || 0%>';
+</script>
