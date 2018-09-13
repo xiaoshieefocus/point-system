@@ -8,7 +8,9 @@
     margin: 0 auto;
 
     &.header,
-    &.info {
+    &.info,
+    &.tabs,
+    &.charts {
         width: 1190px;
         max-width: 1190px;
     }

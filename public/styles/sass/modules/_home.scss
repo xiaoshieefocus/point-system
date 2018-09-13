@@ -63,6 +63,52 @@ body.point-home {
             margin-top: 5px;
         }
     }
+    >.tabs {
+        padding: 22px 24px 0;
+        font-size: 0;
+        background-color: #fff;
+        border-bottom: 1px solid #F5F4F5;
+
+        .tab-item {
+            display: inline-block;
+            height: 44px;
+            line-height: 44px;
+            font-size: 14px;
+            color: #2F3A42;
+            font-weight: bold;
+            margin-right: 48px;
+
+            &.active {
+                border-bottom: 2px solid #31A1C2;
+            }
+        }
+
+        .export {
+            @include general_primary-button(72px, 26px);
+            float: right;
+            margin-top: 10px;
+        }
+    }
+
+    >.charts {
+        height: 410px;
+        background-color: #ffffff;
+        padding: 40px 24px;
+
+        @include clearfix;
+
+        #line-chart {
+            float: left;
+            width: 700px;
+            height: 350px;
+        }
+
+        #circle-chart {
+            float: right;
+            width: 400px;
+            height: 350px;
+        }
+    }
     #echart {
         margin-bottom: 18px;
     }
