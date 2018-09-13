@@ -252,7 +252,7 @@ body.point-home {
             float: left;
             clear: left;
             border-bottom: 1px dashed #dcdcdc;
-            padding: 11px 24px 12px 24px;
+            padding: 11px 0 12px 0;
             box-sizing: border-box;
             &.last {
                 border-bottom: none;
@@ -261,7 +261,6 @@ body.point-home {
                 float: left;
                 clear: both;
                 width: 42px;
-                height: 42px;
                 margin-right: 18px;
             }
             .userinfo {
@@ -343,7 +342,7 @@ body.point-home {
         }
         .points-btn {
             display: block;
-            float: left;
+            float: right;
             font-family: PingFangSC-Regular;
             font-size: 12px;
             color: #e37236;
